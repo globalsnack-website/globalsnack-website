@@ -71,3 +71,45 @@
 @media(max-width:1100px){.product-card{min-height:430px}.product-image{min-height:175px}}
 @media(max-width:760px){.brand-logo{width:60px;height:60px}.footer-brand .brand-logo{width:52px;height:52px}.brand-tile{min-width:150px;height:65px}.brand-mark-mini{width:38px;height:38px;flex-basis:38px}.brand-tile-name{font-size:12px}.product-grid{grid-template-columns:repeat(2,minmax(0,1fr));grid-auto-rows:auto}.product-card{min-height:390px}.product-image{height:auto;aspect-ratio:1/1;min-height:135px;max-height:190px}.product-info{padding:11px}.product-info h3{min-height:43px;font-size:11px}.product-desc{min-height:50px}.hero-visual{height:350px;margin-top:18px}.hero-poster-shell{height:320px;width:min(94%,420px);padding:10px;border-width:5px}.hero-poster-heading strong{font-size:19px}.hero-poster-grid{gap:5px;padding:7px 0}.poster-product span{font-size:6px}.poster-sticker{width:78px;height:78px;font-size:9px;right:-3px;bottom:4px}}
 @media(max-width:390px){.product-card{min-height:365px}.product-image{min-height:120px}.product-action{flex-wrap:wrap}.add-button{min-width:100%}.hero-poster-shell{height:295px}.hero-visual{height:320px}}
+
+/* V2.3 — photographic brand-led storefront */
+.hero-branded{grid-template-columns:minmax(0,.92fr) minmax(0,1.08fr);gap:34px;min-height:610px;padding-top:70px;padding-bottom:78px;background:radial-gradient(ellipse at 78% 45%,#65432d 0,#3c2419 48%,#24140e 100%)}
+.hero-branded .hero-content{max-width:610px}
+.hero-branded h1{font-size:clamp(40px,4.7vw,66px);line-height:1.04}
+.hero-brand-proof{margin-top:34px;padding-top:17px;border-top:1px solid #ffffff2b;display:flex;flex-direction:column;gap:8px;max-width:530px}
+.hero-brand-proof span{font-size:8px;letter-spacing:2.3px;color:#d7b77f;font-weight:800}
+.hero-brand-proof b{font:600 clamp(11px,1.15vw,15px)/1.5 'DM Sans',sans-serif;color:#fff0dc;letter-spacing:.4px}
+.hero-brand-visual{height:440px;min-width:0}
+.hero-poster-shell{width:100%;max-width:690px;height:420px;transform:none;border:1px solid #d8b77e;outline:7px solid #ffffff0b;border-radius:3px;padding:15px;background:linear-gradient(145deg,#fff9ed,#ead8bb);box-shadow:0 28px 75px #10080480}
+.hero-poster-heading{padding:2px 0 12px}
+.hero-poster-heading span{font-size:9px;letter-spacing:3px}
+.hero-poster-heading strong{font-size:clamp(16px,1.7vw,23px);letter-spacing:.5px}
+.hero-poster-grid{grid-template-columns:repeat(3,minmax(0,1fr));grid-template-rows:repeat(2,minmax(0,1fr));gap:9px;padding:12px 0}
+.poster-product{border:1px solid #e4d2b8;border-radius:2px;padding:0;background:linear-gradient(145deg,#fff,#f4eee4);display:flex;flex-direction:column;justify-content:space-between;cursor:pointer;transition:transform .25s,box-shadow .25s,border-color .25s}
+.poster-product:hover{transform:translateY(-4px);border-color:#bd8d50;box-shadow:0 8px 20px #43291d20}
+.poster-image-wrap{width:100%;height:calc(100% - 31px);min-height:0;display:grid;place-items:center;padding:5px;overflow:hidden}
+.poster-product img{width:100%;height:100%;object-fit:contain;padding:4px;mix-blend-mode:multiply;transition:transform .35s}
+.poster-product:hover img{transform:scale(1.07)}
+.poster-brand-name{position:static!important;display:grid;place-items:center;width:100%;min-height:31px;padding:5px 3px!important;background:#3a2116!important;color:#fff2dd!important;font-size:clamp(8px,.8vw,11px)!important;letter-spacing:1px!important;font-weight:800!important;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.poster-product.poster-image-error .poster-brand-name{background:#3a2116!important}
+.hero-poster-footer{font-size:8px;letter-spacing:1.2px}
+.poster-fallback{font:800 14px/1.8 'DM Sans',sans-serif;letter-spacing:1.5px;color:#704b2f}
+.brand-section{padding:42px 5% 46px;background:#f3ead7}
+.brand-section .section-kicker{font-size:10px;letter-spacing:3px;color:#8e6740;margin-bottom:24px}
+.brand-strip-wrap{max-width:1450px;gap:12px}
+.brand-strip{gap:16px;padding:5px 4px 13px}
+.brand-card{flex:0 0 205px;width:205px;height:258px;padding:0;display:flex;flex-direction:column;overflow:hidden;text-align:left;border:1px solid #dfcfb6;border-radius:5px;background:#fffaf1;color:var(--espresso);cursor:pointer;box-shadow:0 8px 25px #49321b0d;transition:transform .3s,box-shadow .3s,border-color .3s}
+.brand-card:hover{transform:translateY(-7px);box-shadow:0 18px 35px #49321b24;border-color:#bc8c50}
+.brand-card-photo{height:190px;flex:0 0 190px;width:100%;position:relative;display:grid;place-items:center;overflow:hidden;background:linear-gradient(145deg,#fff,#eee3d1)}
+.brand-card-photo img{width:100%;height:100%;object-fit:contain;padding:10px;mix-blend-mode:multiply;transition:transform .45s}
+.brand-card:hover .brand-card-photo img{transform:scale(1.07)}
+.brand-photo-count{position:absolute;right:8px;top:8px;padding:5px 7px;background:#2d1a12dc;color:#fff2df;border-radius:2px;font-size:8px;letter-spacing:.5px}
+.brand-card-name{padding:12px 13px 3px;font:700 19px/1.1 'Playfair Display',serif;color:#3b2116;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.brand-card-link{padding:5px 13px 12px;font-size:8px;letter-spacing:1.5px;font-weight:800;color:#a6753e}
+.brand-scroll{width:36px;height:36px;border-color:#d7c4a8;background:#fffaf1}
+.menu-brand-link{grid-template-columns:48px 1fr auto;min-height:58px}
+.menu-brand-link img{width:43px;height:43px;object-fit:contain;background:#f3eadc;border-radius:3px;padding:3px}
+.menu-brand-link strong{font-size:13px}
+@media(max-width:1100px){.hero-branded{grid-template-columns:1fr 1fr;padding-left:6%;padding-right:6%;gap:22px}.hero-poster-shell{height:390px}.hero-brand-visual{height:400px}.brand-card{flex-basis:185px;width:185px;height:240px}.brand-card-photo{height:174px;flex-basis:174px}}
+@media(max-width:760px){.hero-branded{grid-template-columns:1fr;gap:12px;padding:54px 6% 64px}.hero-branded h1{font-size:clamp(38px,9vw,54px)}.hero-brand-proof{margin-top:23px}.hero-brand-visual{height:350px;margin-top:12px}.hero-poster-shell{height:340px;width:100%;max-width:560px;padding:10px;border-width:1px;outline-width:4px}.hero-poster-heading{padding-bottom:8px}.hero-poster-heading strong{font-size:16px}.hero-poster-grid{gap:6px;padding:8px 0}.poster-image-wrap{height:calc(100% - 26px);padding:3px}.poster-brand-name{min-height:26px;font-size:8px!important;letter-spacing:.5px!important}.hero-poster-footer{font-size:7px;letter-spacing:.6px}.brand-section{padding:30px 4% 34px}.brand-card{flex-basis:158px;width:158px;height:216px}.brand-card-photo{height:153px;flex-basis:153px}.brand-card-name{font-size:16px;padding:10px 10px 2px}.brand-card-link{font-size:7px;padding:5px 10px 10px}}
+@media(max-width:390px){.hero-brand-visual{height:315px}.hero-poster-shell{height:305px;padding:8px}.hero-poster-heading strong{font-size:13px}.hero-poster-grid{gap:4px}.poster-brand-name{font-size:7px!important}.brand-card{flex-basis:145px;width:145px;height:205px}.brand-card-photo{height:145px;flex-basis:145px}}

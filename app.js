@@ -42,32 +42,49 @@ function setCartQty(id, qty) {
   if (qty === 0) delete cart[id]; else cart[id] = qty;
   persistCart();
 }
+function canonicalBrand(value) {
+  const raw = String(value || "").trim();
+  const lower = raw.toLowerCase();
+  if (!raw) return "Global Snack";
+  if (lower.startsWith("cadbury")) return "Cadbury";
+  if (lower === "malteser" || lower === "maltesers") return "Maltesers";
+  if (lower === "fox burten company") return "Fox's";
+  if (lower === "m&m's" || lower === "m & m's") return "M&M's";
+  if (lower === "hershey's") return "Hershey's";
+  if (lower === "ray no sugar") return "Ray No Sugar";
+  return raw.replace(/\s+/g, " ");
+}
+function getBrandGroups() {
+  const groups = new Map();
+  products.forEach(product => {
+    const name = canonicalBrand(product.brand);
+    if (!groups.has(name)) groups.set(name, []);
+    groups.get(name).push(product);
+  });
+  return [...groups.entries()].map(([name, items]) => ({name, items, image: items.find(p => p.image)?.image || "", count: items.length}))
+    .sort((a,b) => a.name.localeCompare(b.name));
+}
 function categoriesAndBrands() {
   const categories = unique(products.map(p => p.category));
-  const brands = unique(products.map(p => p.brand));
+  const brandGroups = getBrandGroups();
+  const brands = brandGroups.map(group => group.name);
   $("categoryFilter").innerHTML = '<option value="">All categories</option>' + categories.map(v => `<option value="${esc(v)}">${esc(v)}</option>`).join("");
   $("brandFilter").innerHTML = '<option value="">All brands</option>' + brands.map(v => `<option value="${esc(v)}">${esc(v)}</option>`).join("");
   $("categoryPills").innerHTML = ['All', ...categories].map((v,i) => `<button class="category-pill ${i===0?'active':''}" data-category="${i===0?'':esc(v)}">${esc(v)}</button>`).join("");
-  $("brandStrip").innerHTML = brands.map(brand => `<button class="brand-tile" data-brand="${esc(brand)}"><span class="brand-mark-mini">${esc(brand.replace(/[^a-z0-9]/gi,'').slice(0,2).toUpperCase() || 'GS')}</span><span class="brand-tile-name">${esc(brand)}</span><span class="brand-tile-arrow">↗</span></button>`).join("") || '<span class="brand-loading">Brands will appear as products are published.</span>';
+  $("brandStrip").innerHTML = brandGroups.map(group => `<button class="brand-card" data-brand="${esc(group.name)}" aria-label="Browse ${esc(group.name)} products"><span class="brand-card-photo">${group.image ? `<img src="${esc(group.image)}" alt="${esc(group.name)} product" loading="lazy" onerror="this.closest('.brand-card-photo').classList.add('brand-photo-error');this.remove()">` : ''}<span class="brand-photo-count">${group.count} ${group.count===1?'product':'products'}</span></span><span class="brand-card-name">${esc(group.name)}</span><span class="brand-card-link">VIEW COLLECTION ↗</span></button>`).join("") || '<span class="brand-loading">Brands will appear as products are published.</span>';
   $("menuCategories").innerHTML = categories.map(v => `<button class="menu-filter-link" data-menu-category="${esc(v)}">${esc(v)} <span>↗</span></button>`).join("") || '<p class="menu-empty">Categories will appear as products are published.</p>';
-  $("menuBrands").innerHTML = brands.map(v => `<button class="menu-filter-link menu-brand-link" data-menu-brand="${esc(v)}"><span class="menu-brand-mark">${esc(v.replace(/[^a-z0-9]/gi,'').slice(0,2).toUpperCase() || 'GS')}</span><strong>${esc(v)}</strong><span>↗</span></button>`).join("") || '<p class="menu-empty">Brands will appear as products are published.</p>';
-  renderHeroPoster(brands);
+  $("menuBrands").innerHTML = brandGroups.map(group => `<button class="menu-filter-link menu-brand-link" data-menu-brand="${esc(group.name)}">${group.image ? `<img src="${esc(group.image)}" alt="" loading="lazy">` : '<span class="menu-brand-mark">GS</span>'}<strong>${esc(group.name)}</strong><span>↗</span></button>`).join("") || '<p class="menu-empty">Brands will appear as products are published.</p>';
+  $("heroBrandProof").innerHTML = brands.length ? `<span>BRANDS YOU LOVE</span><b>${brands.slice(0,5).map(esc).join(' · ')}${brands.length>5?' · MORE':''}</b>` : '<span>BRANDS YOU LOVE</span><b>Imported favourites, coming soon</b>';
+  renderHeroPoster(brandGroups);
 }
-function renderHeroPoster(brands) {
-  const seen = new Set();
-  const picks = [];
-  for (const p of products) {
-    const key = String(p.brand || "Global Snack").trim().toLowerCase();
-    if (!seen.has(key) && p.image) { seen.add(key); picks.push(p); }
-    if (picks.length >= 9) break;
-  }
-  $("heroPoster").innerHTML = picks.length ? picks.map((p,i) => `<div class="poster-product poster-product-${i+1}"><img src="${esc(p.image)}" alt="${esc(p.name)}" loading="lazy" onerror="this.closest('.poster-product').classList.add('poster-image-error');this.remove()"><span>${esc(p.brand || "Imported Treat")}</span></div>`).join("") : '<div class="poster-fallback">A WORLD OF<br>IMPORTED TREATS</div>';
+function renderHeroPoster(brandGroups) {
+  const picks = brandGroups.map(group => group.items.find(p => p.image) || group.items[0]).filter(Boolean).slice(0,6);
+  $("heroPoster").innerHTML = picks.length ? picks.map((p,i) => `<button type="button" class="poster-product poster-product-${i+1}" data-poster-brand="${esc(canonicalBrand(p.brand))}" aria-label="Browse ${esc(canonicalBrand(p.brand))}"><span class="poster-image-wrap">${p.image ? `<img src="${esc(p.image)}" alt="${esc(p.name)}" loading="lazy" onerror="this.closest('.poster-product').classList.add('poster-image-error');this.remove()">` : ''}</span><span class="poster-brand-name">${esc(canonicalBrand(p.brand))}</span></button>`).join("") : '<div class="poster-fallback">ACTIVATE YOUR APPROVED PRODUCTS<br>TO SHOW YOUR REAL BRANDS HERE</div>';
 }
-
 function getFilteredProducts() {
   const query = $("searchInput").value.toLowerCase().trim();
   const category = $("categoryFilter").value; const brand = $("brandFilter").value;
-  let filtered = products.filter(p => (!query || [p.name,p.brand,p.description,p.category].join(" ").toLowerCase().includes(query)) && (!category || p.category === category) && (!brand || p.brand === brand));
+  let filtered = products.filter(p => (!query || [p.name,p.brand,p.description,p.category].join(" ").toLowerCase().includes(query)) && (!category || p.category === category) && (!brand || canonicalBrand(p.brand) === brand));
   const sort = $("sortFilter").value;
   if (sort === "az") filtered.sort((a,b)=>a.name.localeCompare(b.name));
   if (sort === "za") filtered.sort((a,b)=>b.name.localeCompare(a.name));
@@ -155,6 +172,7 @@ $("cartItems").addEventListener("click", event => {
 });
 $("cartItems").addEventListener("change", event => { if(event.target.matches("[data-cart-input]")) setCartQty(event.target.dataset.cartInput,Number(event.target.value)); });
 $("brandStrip").addEventListener("click", event => { const tile=event.target.closest("[data-brand]"); if(tile) applyBrand(tile.dataset.brand); });
+$("heroPoster").addEventListener("click", event => { const tile=event.target.closest("[data-poster-brand]"); if(tile) applyBrand(tile.dataset.posterBrand); });
 $("categoryPills").addEventListener("click", event => { const pill=event.target.closest("[data-category]"); if(pill) applyCategory(pill.dataset.category); });
 $("menuCategories").addEventListener("click", event => { const button=event.target.closest("[data-menu-category]"); if(button) applyCategory(button.dataset.menuCategory); });
 $("menuBrands").addEventListener("click", event => { const button=event.target.closest("[data-menu-brand]"); if(button) applyBrand(button.dataset.menuBrand); });
