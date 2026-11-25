@@ -64,6 +64,36 @@ function getBrandGroups() {
   return [...groups.entries()].map(([name, items]) => ({name, items, image: items.find(p => p.image)?.image || "", count: items.length}))
     .sort((a,b) => a.name.localeCompare(b.name));
 }
+const CATEGORY_SHOWCASE = [
+  {title:"Chocolates", subtitle:"Bars, pralines & indulgent bites", terms:["chocolate","chocolates","truffle","praline","cocoa"]},
+  {title:"Drinks", subtitle:"Sodas, energy drinks & more", terms:["drink","drinks","beverage","soda","cola","juice","water","prime","fanta","coke"]},
+  {title:"Biscuits & Cookies", subtitle:"Cookies, wafers & biscuits", terms:["biscuit","biscuits","cookie","cookies","wafer","cracker"]},
+  {title:"Candies & Gummies", subtitle:"Chewy, sour & fruity favourites", terms:["candy","candies","gummy","gummies","sweet","sweets","fruitella","haribo","warheads"]},
+  {title:"Sauces & Condiments", subtitle:"Bring something extra to the table", terms:["sauce","sauces","condiment","dip","dressing","syrup"]},
+  {title:"Breakfast & Pantry", subtitle:"Spreads, cereals, jams, cheese & noodles", terms:["jam","cereal","spread","nutella","cheese","noodle","noodles","peanut butter","honey"]}
+];
+function categoryMatches(product, config) {
+  const text = [product.category, product.name, product.brand, product.description].join(" ").toLowerCase();
+  return config.terms.some(term => text.includes(term));
+}
+function renderCategoryBanners() {
+  const host = $("categoryBanners");
+  host.innerHTML = CATEGORY_SHOWCASE.map((config, index) => {
+    const matches = products.filter(p => categoryMatches(p, config));
+    const photos = matches.filter(p => p.image).slice(0,4);
+    const collage = photos.length ? photos.map((p,i)=>`<span class="category-photo category-photo-${i+1}"><img src="${esc(p.image)}" alt="${esc(p.name)}" loading="lazy" onerror="this.parentElement.classList.add('photo-missing');this.remove()"></span>`).join("") : `<span class="category-photo-empty"><span>GLOBAL SNACK</span><small>${esc(config.title.toUpperCase())}</small></span>`;
+    return `<button class="category-banner category-banner-${index+1}" type="button" data-category-showcase="${index}" aria-label="Explore ${esc(config.title)}"><span class="category-banner-copy"><span class="category-index">0${index+1} / CATEGORY</span><strong>${esc(config.title)}</strong><small>${esc(config.subtitle)}</small><span class="category-banner-cta">EXPLORE COLLECTION <b>↗</b></span></span><span class="category-banner-collage">${collage}</span><span class="category-banner-count">${matches.length} ${matches.length===1?'PRODUCT':'PRODUCTS'}</span></button>`;
+  }).join("");
+  $("categoryDots").innerHTML = CATEGORY_SHOWCASE.map((_,i)=>`<button class="category-dot ${i===0?'active':''}" data-category-dot="${i}" aria-label="Go to category ${i+1}"></button>`).join("");
+}
+function applyShowcaseCategory(index) {
+  const config=CATEGORY_SHOWCASE[index]; if(!config) return;
+  const exact=unique(products.map(p=>p.category)).find(c=>c.toLowerCase()===config.title.toLowerCase());
+  $("categoryFilter").value=exact||""; $("brandFilter").value="";
+  $("searchInput").value=exact?"":config.terms[0];
+  render(); $("catalogue").scrollIntoView({behavior:"smooth"});
+}
+
 function categoriesAndBrands() {
   const categories = unique(products.map(p => p.category));
   const brandGroups = getBrandGroups();
@@ -76,6 +106,7 @@ function categoriesAndBrands() {
   $("menuBrands").innerHTML = brandGroups.map(group => `<button class="menu-filter-link menu-brand-link" data-menu-brand="${esc(group.name)}">${group.image ? `<img src="${esc(group.image)}" alt="" loading="lazy">` : '<span class="menu-brand-mark">GS</span>'}<strong>${esc(group.name)}</strong><span>↗</span></button>`).join("") || '<p class="menu-empty">Brands will appear as products are published.</p>';
   $("heroBrandProof").innerHTML = brands.length ? `<span>BRANDS YOU LOVE</span><b>${brands.slice(0,5).map(esc).join(' · ')}${brands.length>5?' · MORE':''}</b>` : '<span>BRANDS YOU LOVE</span><b>Imported favourites, coming soon</b>';
   renderHeroPoster(brandGroups);
+  renderCategoryBanners();
 }
 function renderHeroPoster(brandGroups) {
   const picks = brandGroups.map(group => group.items.find(p => p.image) || group.items[0]).filter(Boolean).slice(0,6);
@@ -198,4 +229,9 @@ async function init() {
     categoriesAndBrands(); render(); renderCart(); updateCartCount();
   } catch(error) { $("resultCount").textContent="Catalogue unavailable"; $("notice").classList.remove("hidden"); $("notice").textContent="We could not load the product catalogue. Please check that data/products.json is present and valid."; console.error(error); }
 }
+$("categoryBanners").addEventListener("click", event=>{const card=event.target.closest("[data-category-showcase]");if(card)applyShowcaseCategory(Number(card.dataset.categoryShowcase));});
+$("categoryDots").addEventListener("click", event=>{const dot=event.target.closest("[data-category-dot]");if(dot){const card=$("categoryBanners").children[Number(dot.dataset.categoryDot)];card?.scrollIntoView({behavior:"smooth",block:"nearest",inline:"start"});}});
+$("categoryScrollLeft").onclick=()=>$("categoryBanners").scrollBy({left:-520,behavior:"smooth"});
+$("categoryScrollRight").onclick=()=>$("categoryBanners").scrollBy({left:520,behavior:"smooth"});
+$("categoryBanners").addEventListener("scroll",()=>{const host=$("categoryBanners"),cards=[...host.children];let nearest=0,dist=Infinity;cards.forEach((card,i)=>{const d=Math.abs(card.offsetLeft-host.scrollLeft);if(d<dist){dist=d;nearest=i;}});$("categoryDots").querySelectorAll(".category-dot").forEach((dot,i)=>dot.classList.toggle("active",i===nearest));},{passive:true});
 $("year").textContent=new Date().getFullYear(); init();
