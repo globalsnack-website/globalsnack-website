@@ -2,49 +2,58 @@
 <html lang="en">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="Explore imported chocolates, snacks, biscuits and treats at Global Snack. Send one combined product enquiry on WhatsApp.">
-<title>Global Snack | Imported Chocolates & Snacks</title>
+<meta name="description" content="Explore imported chocolates, snacks, biscuits and treats at Global Snack. Build a product enquiry and send it directly on WhatsApp.">
+<meta name="theme-color" content="#2d1a12">
+<title>Global Snack | Discover Imported Treats</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-<div class="topline">IMPORTED TREATS • RETAIL & WHOLESALE ENQUIRIES</div>
-<header class="header">
-  <a class="brand" href="#"><span class="brand-mark">G</span><span>GLOBAL<span class="brand-light">SNACK</span><small>CHOCOLATES · SNACKS · MORE</small></span></a>
-  <nav><a href="#catalogue">Catalogue</a><a href="#about">About</a><button class="cart-open" id="cartOpen">Enquiry list <span id="cartCount">0</span></button></nav>
-</header>
-<section class="hero">
-  <div class="hero-copy">
-    <div class="eyebrow">A WORLD OF FLAVOUR</div>
-    <h1>Discover your next<br><em>favourite treat.</em></h1>
-    <p>Explore our selection of imported chocolates, biscuits, snacks and beverages. Add your favourites to one enquiry and reach us directly on WhatsApp.</p>
-    <a class="primary-link" href="#catalogue">Explore catalogue <span>↘</span></a>
-    <div class="hero-note"><span class="dot"></span> Retail & wholesale enquiries welcome</div>
+<div class="announcement"><span>IMPORTED TREATS</span><i></i><span>RETAIL & WHOLESALE ENQUIRIES</span><i></i><span>ONE LIST · ONE WHATSAPP ENQUIRY</span></div>
+<header class="site-header">
+  <div class="header-inner">
+    <button class="menu-trigger" id="menuOpen" aria-label="Open navigation" aria-expanded="false"><span></span><span></span><span></span></button>
+    <a class="brand" href="#top" aria-label="Global Snack home"><span class="brand-mark">G</span><span class="brand-word">GLOBAL<span>SNACK</span><small>CHOCOLATES · SNACKS · MORE</small></span></a>
+    <nav class="desktop-nav"><a href="#catalogue">Catalogue</a><a href="#brands">Brands</a><a href="#about">Our story</a></nav>
+    <button class="cart-trigger" id="cartOpen"><span class="bag-icon">▢</span><span class="cart-label">Enquiry list</span><b id="cartCount">0</b></button>
   </div>
-  <div class="hero-art"><div class="art-circle"></div><div class="art-label">THE<br>GOOD<br>STUFF.</div><div class="art-chip chip-one">CHOCOLATE</div><div class="art-chip chip-two">HAPPINESS</div></div>
+</header>
+<main id="top">
+<section class="hero">
+  <div class="hero-content">
+    <div class="eyebrow"><span class="eyebrow-line"></span> A WORLD OF FLAVOUR</div>
+    <h1>Little moments.<br><em>Extraordinary treats.</em></h1>
+    <p>Explore a handpicked world of imported chocolates, biscuits, snacks and beverages. Build your list and send one simple enquiry to our team.</p>
+    <div class="hero-actions"><a class="button-gold" href="#catalogue">Explore the collection <span>↘</span></a><span class="hero-caption">Retail & wholesale enquiries welcome</span></div>
+  </div>
+  <div class="hero-visual" aria-hidden="true"><div class="hero-orbit orbit-one"></div><div class="hero-orbit orbit-two"></div><div class="hero-sun"><span>THE<br><b>GOOD</b><br>STUFF.</span></div><span class="floating-tag tag-top">A TASTE OF ELSEWHERE</span><span class="floating-tag tag-bottom">MADE TO BE DISCOVERED</span><span class="hero-spark spark-one">✳</span><span class="hero-spark spark-two">✦</span></div>
+  <div class="hero-bottom"><span>01 / DISCOVER</span><span>CURATED FOR THE CURIOUS</span><span>SCROLL TO EXPLORE ↓</span></div>
 </section>
-<main id="catalogue" class="catalogue">
-  <div class="section-head"><div><div class="eyebrow">THE COLLECTION</div><h2>Explore our catalogue</h2><p>Find a product and add it to your enquiry list.</p></div><div class="count-label" id="resultCount">Loading products…</div></div>
-  <div class="toolbar"><label class="search"><span>⌕</span><input id="searchInput" type="search" placeholder="Search products or brands…"></label><select id="categoryFilter"><option value="">All categories</option></select><select id="brandFilter"><option value="">All brands</option></select></div>
+<section class="brand-section" id="brands">
+  <div class="section-kicker">A FEW FAMILIAR FAVOURITES</div>
+  <div class="brand-strip-wrap"><button class="brand-scroll" id="brandScrollLeft" aria-label="Scroll brands left">‹</button><div class="brand-strip" id="brandStrip"><span class="brand-loading">Discovering brands…</span></div><button class="brand-scroll" id="brandScrollRight" aria-label="Scroll brands right">›</button></div>
+</section>
+<section id="catalogue" class="catalogue-section">
+  <div class="catalogue-heading"><div><div class="eyebrow dark"><span class="eyebrow-line"></span> THE COLLECTION</div><h2>Find your <em>favourite.</em></h2><p>Browse the collection, choose your quantity and add it to your enquiry.</p></div><div class="catalogue-meta"><span class="live-dot"></span><span id="resultCount">Loading catalogue…</span></div></div>
+  <div class="catalogue-tools">
+    <label class="search-box"><span>⌕</span><input id="searchInput" type="search" placeholder="Search products, brands or keywords…" autocomplete="off"><kbd>⌘ K</kbd></label>
+    <select id="categoryFilter" aria-label="Filter by category"><option value="">All categories</option></select>
+    <select id="brandFilter" aria-label="Filter by brand"><option value="">All brands</option></select>
+    <select id="sortFilter" aria-label="Sort products"><option value="featured">Featured</option><option value="az">Name: A to Z</option><option value="za">Name: Z to A</option><option value="brand">Brand</option></select>
+    <button class="filter-reset" id="clearFilters">Reset</button>
+  </div>
+  <div class="active-filter-row"><div class="category-pills" id="categoryPills"></div><span id="filterSummary"></span></div>
   <div id="notice" class="notice hidden"></div>
   <div id="productGrid" class="product-grid"></div>
-  <div id="emptyState" class="empty hidden"><div>🍫</div><h3>No products found</h3><p>Try another search or category.</p></div>
+  <div id="emptyState" class="empty-state hidden"><div class="empty-icon">✳</div><h3>Nothing on this shelf just yet.</h3><p>Try another search or clear your filters to explore the full collection.</p><button id="emptyReset" class="button-outline">Show all products</button></div>
+</section>
+<section class="editorial-band" id="about"><div class="editorial-mark">G.</div><div><div class="eyebrow"><span class="eyebrow-line"></span> THE GLOBAL SNACK EDIT</div><h2>Good treats.<br><em>Great discoveries.</em></h2></div><p>From everyday favourites to unexpected finds, Global Snack brings together treats worth sharing. Browse at your own pace and send us one combined enquiry for everything you love.</p><a href="#catalogue" class="text-link">Explore the collection <span>↗</span></a></section>
 </main>
-<section id="about" class="about"><div><div class="eyebrow">GLOBAL SNACK</div><h2>Good treats.<br><em>Great discoveries.</em></h2></div><p>Global Snack brings together a curated range of international chocolates, snacks and treats. Browse the catalogue and send us one combined enquiry for the products you want.</p></section>
-<footer><a class="brand footer-brand" href="#"><span class="brand-mark">G</span><span>GLOBAL<span class="brand-light">SNACK</span><small>CHOCOLATES · SNACKS · MORE</small></span></a><span>© <span id="year"></span> Global Snack. All rights reserved.</span><a href="#catalogue">Back to catalogue ↑</a></footer>
-<div id="cartOverlay" class="overlay hidden"></div>
-<aside id="cartDrawer" class="drawer" aria-label="Enquiry list" aria-hidden="true">
- <div class="drawer-head"><div><div class="eyebrow">YOUR SELECTION</div><h2>Enquiry list</h2></div><button id="cartClose" class="icon-btn" aria-label="Close">×</button></div>
- <div id="cartItems" class="cart-items"></div>
- <div id="cartEmpty" class="cart-empty">Your enquiry list is empty.<br>Add products from the catalogue.</div>
- <div class="customer-form">
-  <label>Your name<input id="customerName" placeholder="Name"></label>
-  <label>City<input id="customerCity" placeholder="City"></label>
-  <label>Enquiry type<select id="customerType"><option>Retail</option><option>Wholesale</option></select></label>
-  <button id="sendWhatsApp" class="whatsapp-btn">Send enquiry on WhatsApp ↗</button>
-  <p class="privacy-note">Your selected products and details will be sent to Global Snack via WhatsApp.</p>
- </div>
-</aside>
+<footer class="site-footer"><a class="brand footer-brand" href="#top"><span class="brand-mark">G</span><span class="brand-word">GLOBAL<span>SNACK</span><small>CHOCOLATES · SNACKS · MORE</small></span></a><span>© <span id="year"></span> Global Snack. All rights reserved.</span><a href="#top">Back to top ↑</a></footer>
+<div id="drawerOverlay" class="drawer-overlay hidden"></div>
+<aside id="menuDrawer" class="side-drawer menu-drawer" aria-hidden="true" aria-label="Browse menu"><div class="drawer-top"><div><div class="eyebrow dark">DISCOVER GLOBAL SNACK</div><h2>Browse by</h2></div><button class="close-drawer" id="menuClose" aria-label="Close menu">×</button></div><div class="menu-links"><a href="#catalogue" data-menu-close>All products <span>↗</span></a><div class="menu-subtitle">CATEGORIES</div><div id="menuCategories"></div><div class="menu-subtitle">BRANDS</div><div id="menuBrands" class="menu-brand-list"></div></div><div class="menu-footer">A WORLD OF FLAVOUR · GLOBAL SNACK</div></aside>
+<aside id="cartDrawer" class="side-drawer cart-drawer" aria-hidden="true" aria-label="Your enquiry list"><div class="drawer-top"><div><div class="eyebrow dark">YOUR SELECTION</div><h2>Your enquiry <span id="drawerCount">(0)</span></h2></div><button class="close-drawer" id="cartClose" aria-label="Close enquiry list">×</button></div><div id="cartItems" class="cart-items"></div><div id="cartEmpty" class="cart-empty"><div>✳</div><strong>Your list is waiting.</strong><p>Add products from the catalogue and they will appear here.</p></div><div class="customer-form"><div class="form-title">A few details before we connect</div><div class="form-grid"><label>Your name<input id="customerName" placeholder="Enter your name" autocomplete="name"></label><label>Your city<input id="customerCity" placeholder="Enter your city" autocomplete="address-level2"></label></div><label>Enquiry type<select id="customerType"><option>Retail</option><option>Wholesale</option></select></label><button id="sendWhatsApp" class="whatsapp-button"><span>Send enquiry on WhatsApp</span><span>↗</span></button><p class="privacy-note">Your selected products and quantities will be shared with Global Snack through WhatsApp. No prices are displayed on this catalogue.</p></div></aside>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
 <script src="app.js"></script>
 </body></html>

@@ -1,53 +1,142 @@
-
-const WHATSAPP_NUMBER = "917990683272"; // Change if your enquiry number is different.
+const WHATSAPP_NUMBER = "917990683272";
+const CART_KEY = "globalSnackCart";
 let products = [];
-let cart = JSON.parse(localStorage.getItem("globalSnackCart") || "{}");
+let cart = JSON.parse(localStorage.getItem(CART_KEY) || "{}");
+let activeDrawer = null;
+let toastTimer;
 const $ = id => document.getElementById(id);
-const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
-function saveCart(){localStorage.setItem("globalSnackCart",JSON.stringify(cart));renderCart();updateCount();}
-function updateCount(){$("cartCount").textContent=Object.values(cart).reduce((a,b)=>a+b,0);}
-function openCart(){$("cartDrawer").classList.add("open");$("cartOverlay").classList.remove("hidden");$("cartDrawer").setAttribute("aria-hidden","false");}
-function closeCart(){$("cartDrawer").classList.remove("open");$("cartOverlay").classList.add("hidden");$("cartDrawer").setAttribute("aria-hidden","true");}
-function add(id){cart[id]=(cart[id]||0)+1;saveCart();}
-function change(id,delta){cart[id]=(cart[id]||0)+delta;if(cart[id]<=0)delete cart[id];saveCart();}
-function renderCart(){
- const entries=Object.entries(cart).filter(([id])=>products.some(p=>p.id===id));
- $("cartEmpty").classList.toggle("hidden",entries.length>0);
- $("cartItems").innerHTML=entries.map(([id,q])=>{const p=products.find(x=>x.id===id);return `<div class="cart-row"><div><strong>${esc(p.name)}</strong><small>${esc(p.brand||"")}</small></div><div class="qty"><button data-change="${id}" data-delta="-1">−</button><b>${q}</b><button data-change="${id}" data-delta="1">+</button></div></div>`}).join("");
+const esc = value => String(value ?? "").replace(/[&<>"']/g, ch => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[ch]));
+const unique = values => [...new Set(values.map(v => String(v || "").trim()).filter(Boolean))].sort((a,b)=>a.localeCompare(b));
+const cartQuantity = () => Object.values(cart).reduce((sum, qty) => sum + Number(qty || 0), 0);
+const productById = id => products.find(product => String(product.id) === String(id));
+
+function showToast(message) {
+  const toast = $("toast"); toast.textContent = message; toast.classList.add("show");
+  clearTimeout(toastTimer); toastTimer = setTimeout(() => toast.classList.remove("show"), 2300);
 }
-function categories(){
- const cats=[...new Set(products.map(p=>p.category).filter(Boolean))].sort();
- const brands=[...new Set(products.map(p=>p.brand).filter(Boolean))].sort();
- $("categoryFilter").innerHTML='<option value="">All categories</option>'+cats.map(x=>`<option>${esc(x)}</option>`).join("");
- $("brandFilter").innerHTML='<option value="">All brands</option>'+brands.map(x=>`<option>${esc(x)}</option>`).join("");
+function persistCart() { localStorage.setItem(CART_KEY, JSON.stringify(cart)); updateCartCount(); renderCart(); }
+function updateCartCount() {
+  const count = cartQuantity(); $("cartCount").textContent = count; $("drawerCount").textContent = `(${count})`;
+  $("cartOpen").classList.toggle("has-items", count > 0);
 }
-function render(){
- const q=$("searchInput").value.toLowerCase().trim(),cat=$("categoryFilter").value,brand=$("brandFilter").value;
- const filtered=products.filter(p=>(!q||[p.name,p.brand,p.description].join(" ").toLowerCase().includes(q))&&(!cat||p.category===cat)&&(!brand||p.brand===brand));
- $("resultCount").textContent=`${filtered.length} products`;
- $("productGrid").innerHTML=filtered.map(p=>`<article class="product-card"><div class="product-image">${p.image?`<img loading="lazy" src="${esc(p.image)}" alt="${esc(p.name)}" onerror="this.remove();this.parentElement.innerHTML='<div class=&quot;image-fallback&quot;>🍫</div>'">`:`<div class="image-fallback">🍫</div>`}</div><div class="product-info"><div class="product-brand">${esc(p.brand||p.category||"GLOBAL SNACK")}</div><h3>${esc(p.name)}</h3><p class="product-desc">${esc(p.description||"Discover this imported treat. Contact us for product details.")}</p><div class="card-bottom"><span class="source-tag">${esc(p.source||"Global Snack")}</span><button class="add-btn ${cart[p.id]?"added":""}" data-add="${p.id}">${cart[p.id]?"Added ✓":"+ Add"}</button></div></div></article>`).join("");
- $("emptyState").classList.toggle("hidden",filtered.length!==0);
+function openDrawer(which) {
+  closeDrawer(false); activeDrawer = which;
+  $("drawerOverlay").classList.remove("hidden");
+  const drawer = which === "cart" ? $("cartDrawer") : $("menuDrawer");
+  drawer.classList.add("open"); drawer.setAttribute("aria-hidden", "false");
+  document.body.classList.add("drawer-open");
+  if (which === "menu") $("menuOpen").setAttribute("aria-expanded", "true");
 }
-async function init(){
- try{
-  const res=await fetch("data/products.json");const all=await res.json();
-  products=all.filter(p=>p.active===true);
-  if(all.length && products.length===0){$("notice").classList.remove("hidden");$("notice").textContent=`${all.length} candidate products are loaded, but none is approved for public display yet. Update active to yes in data/products.csv, then regenerate products.json using the included instructions.`;}
-  categories();render();renderCart();updateCount();
- }catch(e){$("resultCount").textContent="Could not load catalogue";$("notice").classList.remove("hidden");$("notice").textContent="Please check that data/products.json exists and the website is hosted (or run a local web server).";}
+function closeDrawer(reset = true) {
+  ["cartDrawer", "menuDrawer"].forEach(id => { $(id).classList.remove("open"); $(id).setAttribute("aria-hidden", "true"); });
+  $("drawerOverlay").classList.add("hidden"); document.body.classList.remove("drawer-open");
+  $("menuOpen").setAttribute("aria-expanded", "false"); if (reset) activeDrawer = null;
 }
-$("productGrid").addEventListener("click",e=>{const b=e.target.closest("[data-add]");if(b){add(b.dataset.add);render();}});
-$("cartItems").addEventListener("click",e=>{const b=e.target.closest("[data-change]");if(b)change(b.dataset.change,Number(b.dataset.delta));});
-$("searchInput").addEventListener("input",render);$("categoryFilter").addEventListener("change",render);$("brandFilter").addEventListener("change",render);
-$("cartOpen").onclick=openCart;$("cartClose").onclick=closeCart;$("cartOverlay").onclick=closeCart;
-$("sendWhatsApp").onclick=()=>{
- const entries=Object.entries(cart).filter(([id])=>products.some(p=>p.id===id));
- if(!entries.length){alert("Please add at least one product.");return;}
- const name=$("customerName").value.trim(),city=$("customerCity").value.trim(),type=$("customerType").value;
- if(!name||!city){alert("Please enter your name and city.");return;}
- let msg=`Hello Global Snack,%0A%0AI would like to enquire about these products:%0A`;
- entries.forEach(([id,q],i)=>{const p=products.find(x=>x.id===id);msg+=`%0A${i+1}. ${encodeURIComponent(p.name)}${p.brand?" ("+encodeURIComponent(p.brand)+")":""} — Qty: ${q}`;});
- msg+=`%0A%0AName: ${encodeURIComponent(name)}%0ACity: ${encodeURIComponent(city)}%0AEnquiry type: ${encodeURIComponent(type)}%0A%0APlease share details.`;
- window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${msg}`,"_blank");
-};
-$("year").textContent=new Date().getFullYear();init();
+function add(id, amount) {
+  const qty = Math.max(1, Math.min(999, Number(amount) || 1));
+  cart[id] = Math.min(9999, (Number(cart[id]) || 0) + qty); persistCart();
+  showToast(`${qty} ${qty === 1 ? "piece" : "pieces"} added to your enquiry`);
+}
+function setCartQty(id, qty) {
+  qty = Math.max(0, Math.min(9999, Number(qty) || 0));
+  if (qty === 0) delete cart[id]; else cart[id] = qty;
+  persistCart();
+}
+function categoriesAndBrands() {
+  const categories = unique(products.map(p => p.category));
+  const brands = unique(products.map(p => p.brand));
+  $("categoryFilter").innerHTML = '<option value="">All categories</option>' + categories.map(v => `<option value="${esc(v)}">${esc(v)}</option>`).join("");
+  $("brandFilter").innerHTML = '<option value="">All brands</option>' + brands.map(v => `<option value="${esc(v)}">${esc(v)}</option>`).join("");
+  $("categoryPills").innerHTML = ['All', ...categories].map((v,i) => `<button class="category-pill ${i===0?'active':''}" data-category="${i===0?'':esc(v)}">${esc(v)}</button>`).join("");
+  $("brandStrip").innerHTML = brands.map((brand,i) => `<button class="brand-tile" data-brand="${esc(brand)}"><span class="brand-monogram">${esc(brand.replace(/[^a-z0-9]/gi,'').slice(0,2).toUpperCase() || 'GS')}</span><span>${esc(brand)}</span></button>`).join("") || '<span class="brand-loading">Brands will appear as products are published.</span>';
+  $("menuCategories").innerHTML = categories.map(v => `<button class="menu-filter-link" data-menu-category="${esc(v)}">${esc(v)} <span>↗</span></button>`).join("") || '<p class="menu-empty">Categories will appear as products are published.</p>';
+  $("menuBrands").innerHTML = brands.map(v => `<button class="menu-filter-link" data-menu-brand="${esc(v)}">${esc(v)} <span>↗</span></button>`).join("") || '<p class="menu-empty">Brands will appear as products are published.</p>';
+}
+function getFilteredProducts() {
+  const query = $("searchInput").value.toLowerCase().trim();
+  const category = $("categoryFilter").value; const brand = $("brandFilter").value;
+  let filtered = products.filter(p => (!query || [p.name,p.brand,p.description,p.category].join(" ").toLowerCase().includes(query)) && (!category || p.category === category) && (!brand || p.brand === brand));
+  const sort = $("sortFilter").value;
+  if (sort === "az") filtered.sort((a,b)=>a.name.localeCompare(b.name));
+  if (sort === "za") filtered.sort((a,b)=>b.name.localeCompare(a.name));
+  if (sort === "brand") filtered.sort((a,b)=>(a.brand||"").localeCompare(b.brand||"") || a.name.localeCompare(b.name));
+  return filtered;
+}
+function productCard(p) {
+  const qty = Number(cart[p.id]) || 0;
+  const img = p.image ? `<img loading="lazy" src="${esc(p.image)}" alt="${esc(p.name)}" onerror="this.closest('.product-image').classList.add('image-error');this.remove()">` : '';
+  return `<article class="product-card" data-product-card="${esc(p.id)}">
+    <div class="product-image">${img}<span class="image-corner">GLOBAL SNACK</span><button class="quick-add" data-quick-add="${esc(p.id)}" aria-label="Add one ${esc(p.name)} to enquiry">+</button></div>
+    <div class="product-info"><div class="product-brand">${esc(p.brand || p.category || "GLOBAL SNACK")}</div><h3>${esc(p.name)}</h3><p class="product-desc">${esc(p.description || "Discover this imported treat. Contact us for product details.")}</p>
+    <div class="product-meta"><span>${esc(p.category || "Imported treats")}</span><span class="product-source">${esc(p.source || "Global Snack")}</span></div>
+    <div class="product-action"><div class="quantity-control" aria-label="Select quantity"><button data-card-qty="${esc(p.id)}" data-delta="-1" aria-label="Decrease quantity">−</button><input inputmode="numeric" pattern="[0-9]*" min="1" max="999" value="1" data-card-input="${esc(p.id)}" aria-label="Quantity for ${esc(p.name)}"><button data-card-qty="${esc(p.id)}" data-delta="1" aria-label="Increase quantity">+</button></div><button class="add-button ${qty?'in-cart':''}" data-add="${esc(p.id)}">${qty?`In list · ${qty}`:'Add to enquiry'}</button></div>
+    </div></article>`;
+}
+function render() {
+  const filtered = getFilteredProducts();
+  $("resultCount").textContent = `${filtered.length} ${filtered.length === 1 ? "product" : "products"}`;
+  $("productGrid").innerHTML = filtered.map(productCard).join("");
+  $("emptyState").classList.toggle("hidden", filtered.length !== 0);
+  const cat = $("categoryFilter").value;
+  $("categoryPills").querySelectorAll(".category-pill").forEach(button => button.classList.toggle("active", button.dataset.category === cat));
+  const summary = [cat, $("brandFilter").value].filter(Boolean).join(" · ");
+  $("filterSummary").textContent = summary ? `Filtered by ${summary}` : "";
+}
+function renderCart() {
+  const entries = Object.entries(cart).filter(([id,qty]) => Number(qty)>0 && productById(id));
+  $("cartEmpty").classList.toggle("hidden", entries.length > 0);
+  $("cartItems").innerHTML = entries.map(([id,qty]) => {
+    const p = productById(id);
+    return `<div class="cart-item"><div class="cart-thumb">${p.image?`<img src="${esc(p.image)}" alt="" loading="lazy" onerror="this.remove()">`:'🍫'}</div><div class="cart-item-info"><span class="cart-item-brand">${esc(p.brand || "GLOBAL SNACK")}</span><strong>${esc(p.name)}</strong><button class="remove-item" data-remove="${esc(id)}">Remove</button></div><div class="cart-qty"><button data-cart-qty="${esc(id)}" data-delta="-1" aria-label="Decrease quantity">−</button><input data-cart-input="${esc(id)}" inputmode="numeric" value="${qty}" aria-label="Quantity"><button data-cart-qty="${esc(id)}" data-delta="1" aria-label="Increase quantity">+</button></div></div>`;
+  }).join("");
+}
+function applyBrand(brand) { $("brandFilter").value = brand; $("categoryFilter").value = ""; $("searchInput").value = ""; render(); closeDrawer(); document.getElementById("catalogue").scrollIntoView({behavior:"smooth"}); }
+function applyCategory(category) { $("categoryFilter").value = category; $("brandFilter").value = ""; $("searchInput").value = ""; render(); closeDrawer(); document.getElementById("catalogue").scrollIntoView({behavior:"smooth"}); }
+function resetFilters() { $("searchInput").value=""; $("categoryFilter").value=""; $("brandFilter").value=""; $("sortFilter").value="featured"; render(); }
+function sendWhatsApp() {
+  const entries = Object.entries(cart).filter(([id,qty]) => Number(qty)>0 && productById(id));
+  if (!entries.length) { showToast("Add at least one product to your enquiry first."); return; }
+  const name = $("customerName").value.trim(), city = $("customerCity").value.trim();
+  if (!name || !city) { showToast("Please enter your name and city."); (!name ? $("customerName") : $("customerCity")).focus(); return; }
+  const type = $("customerType").value;
+  const lines = ["Hello Global Snack,", "", "I would like to enquire about the following products:"];
+  entries.forEach(([id,qty],i) => { const p=productById(id); lines.push(`${i+1}. ${p.name}${p.brand?` (${p.brand})`:""} — Quantity: ${qty} pcs`); });
+  lines.push("", `Name: ${name}`, `City: ${city}`, `Enquiry type: ${type}`, "", "Please share further details. Thank you.");
+  const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(lines.join("\n"))}`;
+  window.open(url, "_blank", "noopener,noreferrer");
+}
+
+$("productGrid").addEventListener("click", event => {
+  const addButton = event.target.closest("[data-add]");
+  const quick = event.target.closest("[data-quick-add]");
+  const step = event.target.closest("[data-card-qty]");
+  if (addButton) { const id=addButton.dataset.add, input=document.querySelector(`[data-card-input="${CSS.escape(id)}"]`); add(id, Math.max(1, Number(input?.value)||1)); render(); }
+  else if (quick) { add(quick.dataset.quickAdd,1); render(); }
+  else if (step) { const input=document.querySelector(`[data-card-input="${CSS.escape(step.dataset.cardQty)}"]`); input.value=Math.max(1,Math.min(999,(Number(input.value)||1)+Number(step.dataset.delta))); }
+});
+$("productGrid").addEventListener("change", event => { if(event.target.matches("[data-card-input]")) event.target.value=Math.max(1,Math.min(999,Number(event.target.value)||1)); });
+$("cartItems").addEventListener("click", event => {
+  const step=event.target.closest("[data-cart-qty]"), remove=event.target.closest("[data-remove]");
+  if(step) setCartQty(step.dataset.cartQty,(Number(cart[step.dataset.cartQty])||0)+Number(step.dataset.delta));
+  if(remove) { delete cart[remove.dataset.remove]; persistCart(); showToast("Product removed from your enquiry"); }
+});
+$("cartItems").addEventListener("change", event => { if(event.target.matches("[data-cart-input]")) setCartQty(event.target.dataset.cartInput,Number(event.target.value)); });
+$("brandStrip").addEventListener("click", event => { const tile=event.target.closest("[data-brand]"); if(tile) applyBrand(tile.dataset.brand); });
+$("categoryPills").addEventListener("click", event => { const pill=event.target.closest("[data-category]"); if(pill) applyCategory(pill.dataset.category); });
+$("menuCategories").addEventListener("click", event => { const button=event.target.closest("[data-menu-category]"); if(button) applyCategory(button.dataset.menuCategory); });
+$("menuBrands").addEventListener("click", event => { const button=event.target.closest("[data-menu-brand]"); if(button) applyBrand(button.dataset.menuBrand); });
+$("menuDrawer").addEventListener("click", event => { if(event.target.closest("[data-menu-close]")) closeDrawer(); });
+["searchInput","categoryFilter","brandFilter","sortFilter"].forEach(id => $(id).addEventListener(id==="searchInput"?"input":"change",render));
+$("clearFilters").onclick=$("emptyReset").onclick=resetFilters;
+$("menuOpen").onclick=()=>openDrawer("menu"); $("menuClose").onclick=()=>closeDrawer(); $("cartOpen").onclick=()=>openDrawer("cart"); $("cartClose").onclick=()=>closeDrawer(); $("drawerOverlay").onclick=()=>closeDrawer(); $("sendWhatsApp").onclick=sendWhatsApp;
+$("brandScrollLeft").onclick=()=>$("brandStrip").scrollBy({left:-380,behavior:"smooth"}); $("brandScrollRight").onclick=()=>$("brandStrip").scrollBy({left:380,behavior:"smooth"});
+document.addEventListener("keydown",event=>{ if(event.key==="Escape") closeDrawer(); if((event.metaKey||event.ctrlKey)&&event.key.toLowerCase()==="k"){event.preventDefault();$("searchInput").focus();} });
+async function init() {
+  try {
+    const response=await fetch("data/products.json",{cache:"no-store"}); if(!response.ok) throw new Error(`Product data returned ${response.status}`);
+    const all=await response.json(); products=all.filter(p=>p.active===true);
+    if(all.length && products.length===0){$("notice").classList.remove("hidden");$("notice").textContent=`${all.length} products are in the catalogue file. Products appear here after active is set to true.`;}
+    categoriesAndBrands(); render(); renderCart(); updateCartCount();
+  } catch(error) { $("resultCount").textContent="Catalogue unavailable"; $("notice").classList.remove("hidden"); $("notice").textContent="We could not load the product catalogue. Please check that data/products.json is present and valid."; console.error(error); }
+}
+$("year").textContent=new Date().getFullYear(); init();
