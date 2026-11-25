@@ -1,7 +1,7 @@
 const WHATSAPP_NUMBER = "917990683272";
 const CART_KEY = "globalSnackCart";
 // Add your deployed Google Apps Script Web App URL here after setup.
-const GOOGLE_SHEETS_WEB_APP_URL = "";
+const GOOGLE_SHEETS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxkJVuqA7VxnUPyHfvU6PKt5drix-hd1xO8Kh-LoYAM1CABE6HZYavsNCqj3t-PXjk4/exec";
 let products = [];
 let cart = JSON.parse(localStorage.getItem(CART_KEY) || "{}");
 let activeDrawer = null;
