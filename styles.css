@@ -149,3 +149,13 @@
 @media(max-width:1050px){.category-banner-track{grid-auto-columns:calc((100% - 16px)/2)}.category-banner{height:230px}}
 @media(max-width:650px){.category-showcase{padding:44px 4% 40px}.category-showcase-head{align-items:center}.category-showcase-head h2{font-size:32px}.category-showcase-head p{font-size:10px}.category-gallery-controls button{width:34px;height:34px}.category-banner-track{grid-auto-columns:86%;gap:12px}.category-banner{height:220px}.category-banner-copy{padding:19px 0 18px 18px}.category-banner-copy strong{font-size:25px;margin-top:14px}.category-banner-copy small{font-size:9px}.category-banner-collage{padding:20px 10px 34px 0;gap:5px}}
 @media(max-width:380px){.category-banner-track{grid-auto-columns:92%}.category-banner{height:205px}.category-banner-copy strong{font-size:22px}.category-banner-copy small{max-width:135px}}
+
+/* V2.5: live +/- quantity controls update the enquiry cart immediately */
+.product-action{display:flex;flex-direction:column;align-items:flex-start;gap:5px;margin-top:12px}
+.quantity-control.live-quantity{display:flex;align-items:center;gap:0;height:36px;border:1px solid var(--line);background:#fff;border-radius:3px;overflow:hidden}
+.live-quantity button{width:36px;height:34px;border:0;background:#f4eee5;color:var(--espresso);font-size:19px;line-height:1}
+.live-quantity button:hover:not(:disabled){background:var(--espresso);color:#fff}
+.live-quantity button:disabled{opacity:.3;cursor:not-allowed}
+.live-quantity output{display:grid;place-items:center;min-width:42px;height:34px;font-size:12px;font-weight:800;color:var(--espresso);font-variant-numeric:tabular-nums}
+.quantity-hint{font-size:8px;color:var(--muted);letter-spacing:.3px}
+@media(max-width:760px){.product-action{gap:4px}.quantity-control.live-quantity{height:32px}.live-quantity button{height:30px;width:32px}.live-quantity output{height:30px;min-width:38px}}

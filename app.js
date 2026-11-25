@@ -1,5 +1,7 @@
 const WHATSAPP_NUMBER = "917990683272";
 const CART_KEY = "globalSnackCart";
+// Add your deployed Google Apps Script Web App URL here after setup.
+const GOOGLE_SHEETS_WEB_APP_URL = "";
 let products = [];
 let cart = JSON.parse(localStorage.getItem(CART_KEY) || "{}");
 let activeDrawer = null;
@@ -129,7 +131,7 @@ function productCard(p) {
     <div class="product-image">${img}<span class="image-corner">GLOBAL SNACK</span><button class="quick-add" data-quick-add="${esc(p.id)}" aria-label="Add one ${esc(p.name)} to enquiry">+</button></div>
     <div class="product-info"><div class="product-brand">${esc(p.brand || p.category || "GLOBAL SNACK")}</div><h3>${esc(p.name)}</h3><p class="product-desc">${esc(p.description || "Discover this imported treat. Contact us for product details.")}</p>
     <div class="product-meta"><span>${esc(p.category || "Imported treats")}</span><span>Tap to view details ↗</span></div>
-    <div class="product-action"><div class="quantity-control" aria-label="Select quantity"><button data-card-qty="${esc(p.id)}" data-delta="-1" aria-label="Decrease quantity">−</button><input inputmode="numeric" pattern="[0-9]*" min="1" max="999" value="1" data-card-input="${esc(p.id)}" aria-label="Quantity for ${esc(p.name)}"><button data-card-qty="${esc(p.id)}" data-delta="1" aria-label="Increase quantity">+</button></div><button class="add-button ${qty?'in-cart':''}" data-add="${esc(p.id)}">${qty?`In list · ${qty} pcs`:'Add to enquiry'}</button></div>
+    <div class="product-action"><div class="quantity-control live-quantity" aria-label="Quantity in enquiry"><button data-card-qty="${esc(p.id)}" data-delta="-1" aria-label="Remove one ${esc(p.name)}" ${qty===0?'disabled':''}>−</button><output aria-live="polite" data-card-count="${esc(p.id)}">${qty}</output><button data-card-qty="${esc(p.id)}" data-delta="1" aria-label="Add one ${esc(p.name)}">+</button></div><span class="quantity-hint">${qty ? 'in enquiry' : 'Select quantity'}</span></div>
     </div></article>`;
 }
 function openProductModal(id) {
@@ -172,30 +174,44 @@ function renderCart() {
 function applyBrand(brand) { $("brandFilter").value = brand; $("categoryFilter").value = ""; $("searchInput").value = ""; render(); closeDrawer(); document.getElementById("catalogue").scrollIntoView({behavior:"smooth"}); }
 function applyCategory(category) { $("categoryFilter").value = category; $("brandFilter").value = ""; $("searchInput").value = ""; render(); closeDrawer(); document.getElementById("catalogue").scrollIntoView({behavior:"smooth"}); }
 function resetFilters() { $("searchInput").value=""; $("categoryFilter").value=""; $("brandFilter").value=""; $("sortFilter").value="featured"; render(); }
+function productShareUrl(p) {
+  const url = new URL(window.location.href);
+  url.hash = `product=${encodeURIComponent(p.id)}`;
+  return url.toString();
+}
+function saveEnquiryToGoogleSheet(payload) {
+  if (!GOOGLE_SHEETS_WEB_APP_URL) {
+    localStorage.setItem("globalSnackLastEnquiry", JSON.stringify(payload));
+    return Promise.resolve({configured:false});
+  }
+  return fetch(GOOGLE_SHEETS_WEB_APP_URL, {method:"POST",mode:"no-cors",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(payload),keepalive:true})
+    .then(()=>({configured:true})).catch(error=>{console.error("Google Sheets save failed:",error);return {configured:true,failed:true};});
+}
 function sendWhatsApp() {
-  const entries = Object.entries(cart).filter(([id,qty]) => Number(qty)>0 && productById(id));
-  if (!entries.length) { showToast("Add at least one product to your enquiry first."); return; }
-  const name = $("customerName").value.trim(), city = $("customerCity").value.trim();
-  if (!name || !city) { showToast("Please enter your name and city."); (!name ? $("customerName") : $("customerCity")).focus(); return; }
-  const type = $("customerType").value;
-  const lines = ["Hello Global Snack,", "", "I would like to enquire about the following products:"];
-  entries.forEach(([id,qty],i) => { const p=productById(id); lines.push(`${i+1}. ${p.name}${p.brand?` (${p.brand})`:""} — Quantity: ${qty} pcs`); });
-  lines.push("", `Name: ${name}`, `City: ${city}`, `Enquiry type: ${type}`, "", "Please share further details. Thank you.");
-  const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(lines.join("\n"))}`;
-  window.open(url, "_blank", "noopener,noreferrer");
+  const entries=Object.entries(cart).filter(([id,qty])=>Number(qty)>0&&productById(id));
+  if(!entries.length){showToast("Add at least one product to your enquiry first.");return;}
+  const name=$("customerName").value.trim(),city=$("customerCity").value.trim();
+  if(!name||!city){showToast("Please enter your name and city.");(!name?$("customerName"):$("customerCity")).focus();return;}
+  const type=$("customerType").value;
+  const items=entries.map(([id,qty])=>{const p=productById(id);return {id:String(p.id),name:p.name,brand:p.brand||"",category:p.category||"",quantity:Number(qty),productUrl:productShareUrl(p)};});
+  const payload={enquiryId:`GS-${Date.now()}`,customerName:name,customerCity:city,enquiryType:type,totalPieces:cartQuantity(),itemCount:items.length,pageUrl:window.location.href,items};
+  const lines=["Hello Global Snack,","","I would like to enquire about the following products:"];
+  items.forEach((item,i)=>lines.push(`${i+1}. ${item.name}${item.brand?` (${item.brand})`:""} — Quantity: ${item.quantity} pcs`,`Product link: ${item.productUrl}`));
+  lines.push("",`Name: ${name}`,`City: ${city}`,`Enquiry type: ${type}`,`Enquiry reference: ${payload.enquiryId}`,"","Please share further details. Thank you.");
+  const whatsappUrl=`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(lines.join("\n"))}`;
+  window.open(whatsappUrl,"_blank","noopener,noreferrer");
+  saveEnquiryToGoogleSheet(payload).then(result=>{if(!result.configured)showToast("WhatsApp opened. Google Sheets saving needs setup.");else if(result.failed)showToast("WhatsApp opened; online enquiry save may have failed.");else showToast("WhatsApp opened and enquiry submitted for saving.");});
 }
 
 $("productGrid").addEventListener("click", event => {
-  const addButton = event.target.closest("[data-add]");
-  const quick = event.target.closest("[data-quick-add]");
-  const step = event.target.closest("[data-card-qty]");
-  if (addButton) { event.stopPropagation(); const id=addButton.dataset.add, input=document.querySelector(`[data-card-input="${CSS.escape(id)}"]`); add(id, Math.max(1, Number(input?.value)||1)); render(); }
-  else if (quick) { event.stopPropagation(); add(quick.dataset.quickAdd,1); render(); }
-  else if (step) { event.stopPropagation(); const input=document.querySelector(`[data-card-input="${CSS.escape(step.dataset.cardQty)}"]`); input.value=Math.max(1,Math.min(999,(Number(input.value)||1)+Number(step.dataset.delta))); }
-  else if (event.target.closest("input,button,a,select")) return;
-  else { const card=event.target.closest("[data-product-card]"); if(card) openProductModal(card.dataset.productCard); }
+  const step=event.target.closest("[data-card-qty]");
+  const quick=event.target.closest("[data-quick-add]");
+  if(step){event.stopPropagation();const id=step.dataset.cardQty;setCartQty(id,(Number(cart[id])||0)+Number(step.dataset.delta));render();}
+  else if(quick){event.stopPropagation();add(quick.dataset.quickAdd,1);render();}
+  else if(event.target.closest("input,button,a,select"))return;
+  else {const card=event.target.closest("[data-product-card]");if(card)openProductModal(card.dataset.productCard);}
 });
-$("productGrid").addEventListener("change", event => { if(event.target.matches("[data-card-input]")) event.target.value=Math.max(1,Math.min(999,Number(event.target.value)||1)); });
+
 $("cartItems").addEventListener("click", event => {
   const step=event.target.closest("[data-cart-qty]"), remove=event.target.closest("[data-remove]");
   if(step) setCartQty(step.dataset.cartQty,(Number(cart[step.dataset.cartQty])||0)+Number(step.dataset.delta));
@@ -226,7 +242,7 @@ async function init() {
     const response=await fetch("data/products.json",{cache:"no-store"}); if(!response.ok) throw new Error(`Product data returned ${response.status}`);
     const all=await response.json(); products=all.filter(p=>p.active===true);
     if(all.length && products.length===0){$("notice").classList.remove("hidden");$("notice").textContent=`${all.length} products are in the catalogue file. Products appear here after active is set to true.`;}
-    categoriesAndBrands(); render(); renderCart(); updateCartCount();
+    categoriesAndBrands(); render(); renderCart(); updateCartCount(); openProductFromHash();
   } catch(error) { $("resultCount").textContent="Catalogue unavailable"; $("notice").classList.remove("hidden"); $("notice").textContent="We could not load the product catalogue. Please check that data/products.json is present and valid."; console.error(error); }
 }
 $("categoryBanners").addEventListener("click", event=>{const card=event.target.closest("[data-category-showcase]");if(card)applyShowcaseCategory(Number(card.dataset.categoryShowcase));});
@@ -235,3 +251,6 @@ $("categoryScrollLeft").onclick=()=>$("categoryBanners").scrollBy({left:-520,beh
 $("categoryScrollRight").onclick=()=>$("categoryBanners").scrollBy({left:520,behavior:"smooth"});
 $("categoryBanners").addEventListener("scroll",()=>{const host=$("categoryBanners"),cards=[...host.children];let nearest=0,dist=Infinity;cards.forEach((card,i)=>{const d=Math.abs(card.offsetLeft-host.scrollLeft);if(d<dist){dist=d;nearest=i;}});$("categoryDots").querySelectorAll(".category-dot").forEach((dot,i)=>dot.classList.toggle("active",i===nearest));},{passive:true});
 $("year").textContent=new Date().getFullYear(); init();
+
+function openProductFromHash(){const match=window.location.hash.match(/^#product=(.+)$/);if(match){const id=decodeURIComponent(match[1]);if(productById(id))openProductModal(id);}}
+window.addEventListener("hashchange",openProductFromHash);
