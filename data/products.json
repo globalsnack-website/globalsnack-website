@@ -10,7 +10,7 @@
     "variant": "",
     "gtin": "",
     "category": "Imported Snacks",
-    "active": false,
+    "active": true,
     "approval": "needs_review"
   },
   {
@@ -24,7 +24,7 @@
     "variant": "",
     "gtin": "",
     "category": "Imported Snacks",
-    "active": false,
+    "active": true,
     "approval": "needs_review"
   },
   {
@@ -38,7 +38,7 @@
     "variant": "304G",
     "gtin": "",
     "category": "Imported Snacks",
-    "active": false,
+    "active": true,
     "approval": "needs_review"
   },
   {
