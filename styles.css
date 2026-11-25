@@ -5,3 +5,31 @@
 @media(max-width:760px){.announcement{font-size:7px;letter-spacing:1px;gap:7px}.site-header{height:68px}.header-inner{padding:0 4%;gap:12px}.brand-mark{width:34px;height:34px;font-size:21px}.brand-word{font-size:14px}.brand-word small{font-size:6px}.desktop-nav{display:none}.cart-trigger{padding:8px 9px 8px 12px;gap:7px}.cart-label{font-size:9px}.hero{min-height:0;padding:54px 7% 72px;grid-template-columns:1fr}.hero h1{font-size:clamp(39px,10vw,59px)}.hero-content>p{font-size:12px}.hero-visual{height:275px;margin-top:15px}.hero-sun{width:205px;height:205px}.hero-sun span{font-size:29px}.hero-sun b{font-size:35px}.hero-orbit{width:275px;height:275px}.orbit-two{width:320px;height:185px}.tag-top{right:1%;top:15px}.tag-bottom{left:1%;bottom:8px}.hero-bottom{left:7%;right:7%;font-size:7px;bottom:16px}.hero-bottom span:nth-child(2){display:none}.brand-section{padding:23px 4%}.brand-tile{min-width:115px}.catalogue-section{padding:57px 4% 70px}.catalogue-heading{align-items:start;flex-direction:column;gap:12px}.catalogue-heading h2{font-size:36px}.catalogue-tools{grid-template-columns:1fr 1fr}.search-box{grid-column:1/3}.catalogue-tools select{height:42px}.filter-reset{height:42px}.active-filter-row{align-items:flex-start;flex-direction:column;gap:8px}.product-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}.product-image{height:165px}.product-info{padding:12px}.product-info h3{font-size:11px;min-height:47px}.product-desc{font-size:9px;min-height:30px}.product-meta{font-size:7px}.product-action{gap:5px}.quantity-control{height:31px}.quantity-control button{width:23px;height:29px}.quantity-control input{width:23px}.add-button{height:31px;font-size:8px}.quick-add{opacity:1;transform:none;width:28px;height:28px}.editorial-band{padding:45px 7%;grid-template-columns:auto 1fr;gap:18px}.editorial-mark{width:55px;height:55px;font-size:32px}.editorial-band h2{font-size:29px}.editorial-band>p{grid-column:1/3;font-size:10px}.text-link{grid-column:1/3}.site-footer{padding:22px 5%;flex-wrap:wrap}.site-footer>span{order:3;width:100%}}
 @media(max-width:390px){.brand-word{font-size:12px}.cart-label{display:none}.product-grid{gap:8px}.product-image{height:140px}.product-info{padding:9px}.quantity-control button{width:20px}.quantity-control input{width:20px}.add-button{font-size:7px;padding:0 4px}.product-action{gap:4px}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
+
+/* Global Snacks official logo */
+.brand-logo{display:block;width:66px;height:66px;object-fit:contain;flex-shrink:0}
+.footer-brand .brand-logo{width:58px;height:58px}
+.brand{gap:10px}
+@media(max-width:760px){.brand-logo{width:54px;height:54px}.footer-brand .brand-logo{width:48px;height:48px}}
+/* Product detail modal */
+.product-card{cursor:pointer}
+.product-card .product-action,.product-card .quick-add{cursor:default}
+.product-modal{position:fixed;inset:0;z-index:50;display:grid;place-items:center;padding:20px}
+.modal-backdrop{position:absolute;inset:0;background:rgba(26,14,9,.72);backdrop-filter:blur(5px);animation:fadeIn .18s both}
+.modal-panel{position:relative;z-index:1;width:min(900px,100%);max-height:min(88vh,850px);overflow:auto;background:var(--paper);box-shadow:0 25px 90px #0005;animation:modalIn .25s both}
+.modal-close{position:sticky;top:12px;float:right;margin:12px 12px -48px 0;z-index:3;width:38px;height:38px;border:1px solid var(--line);border-radius:50%;background:#fffdf9;color:var(--espresso);font-size:25px;line-height:1}
+.modal-product{display:grid;grid-template-columns:1fr 1fr;min-height:430px}
+.modal-product-image{background:#f3eee7;min-height:430px;display:grid;place-items:center;padding:28px}
+.modal-product-image img{width:100%;height:100%;max-height:560px;object-fit:contain;mix-blend-mode:multiply}
+.modal-product-copy{padding:60px 42px 38px;display:flex;flex-direction:column;align-items:flex-start}
+.modal-product-brand{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#a77843;font-weight:800}
+.modal-product-copy h2{font:700 clamp(25px,3vw,38px)/1.15 'Playfair Display';margin:13px 0}
+.modal-product-copy p{font-size:14px;line-height:1.9;color:var(--muted);white-space:pre-line}
+.modal-product-category{font-size:11px;color:#a18e7c;border-top:1px solid var(--line);padding-top:15px;margin-top:auto;width:100%}
+.modal-actions{display:flex;align-items:center;gap:10px;margin-top:20px;width:100%}
+.modal-actions .quantity-control{height:42px}
+.modal-actions .quantity-control button{height:40px;width:34px}
+.modal-actions .quantity-control input{width:40px;font-size:13px}
+.modal-actions .add-button{height:42px;font-size:11px}
+@keyframes modalIn{from{opacity:0;transform:translateY(16px) scale(.98)}to{opacity:1;transform:translateY(0) scale(1)}}
+@media(max-width:650px){.product-modal{padding:10px}.modal-product{grid-template-columns:1fr}.modal-product-image{min-height:230px;height:260px;padding:18px}.modal-product-copy{padding:25px 22px 26px}.modal-product-copy p{font-size:12px}.modal-product-category{margin-top:10px}}

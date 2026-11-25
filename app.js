@@ -16,7 +16,7 @@ function showToast(message) {
 }
 function persistCart() { localStorage.setItem(CART_KEY, JSON.stringify(cart)); updateCartCount(); renderCart(); }
 function updateCartCount() {
-  const count = cartQuantity(); $("cartCount").textContent = count; $("drawerCount").textContent = `(${count})`;
+  const count = cartQuantity(); $("cartCount").textContent = count; $("drawerCount").textContent = `(${count} pcs)`;
   $("cartOpen").classList.toggle("has-items", count > 0);
 }
 function openDrawer(which) {
@@ -68,9 +68,28 @@ function productCard(p) {
   return `<article class="product-card" data-product-card="${esc(p.id)}">
     <div class="product-image">${img}<span class="image-corner">GLOBAL SNACK</span><button class="quick-add" data-quick-add="${esc(p.id)}" aria-label="Add one ${esc(p.name)} to enquiry">+</button></div>
     <div class="product-info"><div class="product-brand">${esc(p.brand || p.category || "GLOBAL SNACK")}</div><h3>${esc(p.name)}</h3><p class="product-desc">${esc(p.description || "Discover this imported treat. Contact us for product details.")}</p>
-    <div class="product-meta"><span>${esc(p.category || "Imported treats")}</span><span class="product-source">${esc(p.source || "Global Snack")}</span></div>
-    <div class="product-action"><div class="quantity-control" aria-label="Select quantity"><button data-card-qty="${esc(p.id)}" data-delta="-1" aria-label="Decrease quantity">−</button><input inputmode="numeric" pattern="[0-9]*" min="1" max="999" value="1" data-card-input="${esc(p.id)}" aria-label="Quantity for ${esc(p.name)}"><button data-card-qty="${esc(p.id)}" data-delta="1" aria-label="Increase quantity">+</button></div><button class="add-button ${qty?'in-cart':''}" data-add="${esc(p.id)}">${qty?`In list · ${qty}`:'Add to enquiry'}</button></div>
+    <div class="product-meta"><span>${esc(p.category || "Imported treats")}</span><span>Tap to view details ↗</span></div>
+    <div class="product-action"><div class="quantity-control" aria-label="Select quantity"><button data-card-qty="${esc(p.id)}" data-delta="-1" aria-label="Decrease quantity">−</button><input inputmode="numeric" pattern="[0-9]*" min="1" max="999" value="1" data-card-input="${esc(p.id)}" aria-label="Quantity for ${esc(p.name)}"><button data-card-qty="${esc(p.id)}" data-delta="1" aria-label="Increase quantity">+</button></div><button class="add-button ${qty?'in-cart':''}" data-add="${esc(p.id)}">${qty?`In list · ${qty} pcs`:'Add to enquiry'}</button></div>
     </div></article>`;
+}
+function openProductModal(id) {
+  const p = productById(id); if (!p) return;
+  const current = Number(cart[p.id]) || 0;
+  $("modalContent").innerHTML = `<div class="modal-product">
+    <div class="modal-product-image">${p.image ? `<img src="${esc(p.image)}" alt="${esc(p.name)}" onerror="this.remove()">` : '<span>🍫</span>'}</div>
+    <div class="modal-product-copy">
+      <div class="modal-product-brand">${esc(p.brand || "GLOBAL SNACK")}</div>
+      <h2 id="modalTitle">${esc(p.name)}</h2>
+      <p>${esc(p.description || "Contact Global Snack for further product details.")}</p>
+      <div class="modal-product-category">${esc(p.category || "Imported treats")}${current ? ` · ${current} pcs already in your enquiry` : ""}</div>
+      <div class="modal-actions"><div class="quantity-control"><button data-modal-qty="-1" aria-label="Decrease quantity">−</button><input id="modalQty" inputmode="numeric" type="number" min="1" max="999" value="1" aria-label="Quantity to add"><button data-modal-qty="1" aria-label="Increase quantity">+</button></div><button class="add-button" id="modalAdd" data-modal-add="${esc(p.id)}">Add to enquiry</button></div>
+    </div></div>`;
+  $("productModal").classList.remove("hidden"); $("productModal").setAttribute("aria-hidden","false");
+  document.body.classList.add("drawer-open");
+}
+function closeProductModal() {
+  $("productModal").classList.add("hidden"); $("productModal").setAttribute("aria-hidden","true");
+  document.body.classList.remove("drawer-open");
 }
 function render() {
   const filtered = getFilteredProducts();
@@ -110,9 +129,11 @@ $("productGrid").addEventListener("click", event => {
   const addButton = event.target.closest("[data-add]");
   const quick = event.target.closest("[data-quick-add]");
   const step = event.target.closest("[data-card-qty]");
-  if (addButton) { const id=addButton.dataset.add, input=document.querySelector(`[data-card-input="${CSS.escape(id)}"]`); add(id, Math.max(1, Number(input?.value)||1)); render(); }
-  else if (quick) { add(quick.dataset.quickAdd,1); render(); }
-  else if (step) { const input=document.querySelector(`[data-card-input="${CSS.escape(step.dataset.cardQty)}"]`); input.value=Math.max(1,Math.min(999,(Number(input.value)||1)+Number(step.dataset.delta))); }
+  if (addButton) { event.stopPropagation(); const id=addButton.dataset.add, input=document.querySelector(`[data-card-input="${CSS.escape(id)}"]`); add(id, Math.max(1, Number(input?.value)||1)); render(); }
+  else if (quick) { event.stopPropagation(); add(quick.dataset.quickAdd,1); render(); }
+  else if (step) { event.stopPropagation(); const input=document.querySelector(`[data-card-input="${CSS.escape(step.dataset.cardQty)}"]`); input.value=Math.max(1,Math.min(999,(Number(input.value)||1)+Number(step.dataset.delta))); }
+  else if (event.target.closest("input,button,a,select")) return;
+  else { const card=event.target.closest("[data-product-card]"); if(card) openProductModal(card.dataset.productCard); }
 });
 $("productGrid").addEventListener("change", event => { if(event.target.matches("[data-card-input]")) event.target.value=Math.max(1,Math.min(999,Number(event.target.value)||1)); });
 $("cartItems").addEventListener("click", event => {
@@ -130,7 +151,15 @@ $("menuDrawer").addEventListener("click", event => { if(event.target.closest("[d
 $("clearFilters").onclick=$("emptyReset").onclick=resetFilters;
 $("menuOpen").onclick=()=>openDrawer("menu"); $("menuClose").onclick=()=>closeDrawer(); $("cartOpen").onclick=()=>openDrawer("cart"); $("cartClose").onclick=()=>closeDrawer(); $("drawerOverlay").onclick=()=>closeDrawer(); $("sendWhatsApp").onclick=sendWhatsApp;
 $("brandScrollLeft").onclick=()=>$("brandStrip").scrollBy({left:-380,behavior:"smooth"}); $("brandScrollRight").onclick=()=>$("brandStrip").scrollBy({left:380,behavior:"smooth"});
-document.addEventListener("keydown",event=>{ if(event.key==="Escape") closeDrawer(); if((event.metaKey||event.ctrlKey)&&event.key.toLowerCase()==="k"){event.preventDefault();$("searchInput").focus();} });
+$("productModal").addEventListener("click", event => {
+  if (event.target.closest("[data-modal-close]")) closeProductModal();
+  const step = event.target.closest("[data-modal-qty]");
+  if (step) { const input=$("modalQty"); input.value=Math.max(1,Math.min(999,(Number(input.value)||1)+Number(step.dataset.modalQty))); }
+  const addButton = event.target.closest("[data-modal-add]");
+  if (addButton) { add(addButton.dataset.modalAdd, Math.max(1,Math.min(999,Number($("modalQty").value)||1))); closeProductModal(); render(); }
+});
+$("modalClose").onclick=closeProductModal;
+document.addEventListener("keydown",event=>{ if(event.key==="Escape"){ closeDrawer(); closeProductModal(); } if((event.metaKey||event.ctrlKey)&&event.key.toLowerCase()==="k"){event.preventDefault();$("searchInput").focus();} });
 async function init() {
   try {
     const response=await fetch("data/products.json",{cache:"no-store"}); if(!response.ok) throw new Error(`Product data returned ${response.status}`);
