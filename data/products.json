@@ -11,7 +11,7 @@
     "gtin": "",
     "category": "Imported Snacks",
     "active": true,
-    "approval": "needs_review"
+      "approval": "Approved"
   },
   {
     "id": "2",
@@ -24,8 +24,8 @@
     "variant": "",
     "gtin": "",
     "category": "Imported Snacks",
-    "active": true,
-    "approval": "needs_review"
+  "active": true,
+      "approval": "Approved"
   },
   {
     "id": "3",
@@ -39,7 +39,7 @@
     "gtin": "",
     "category": "Imported Snacks",
     "active": true,
-    "approval": "needs_review"
+      "approval": "Approved"
   },
   {
     "id": "4",
