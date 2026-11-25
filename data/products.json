@@ -52,8 +52,8 @@
     "variant": "180G",
     "gtin": "",
     "category": "Imported Snacks",
-    "active": false,
-    "approval": "needs_review"
+    "active": true,
+    "approval": "Approved"
   },
   {
     "id": "5",
@@ -66,8 +66,8 @@
     "variant": "",
     "gtin": "",
     "category": "Imported Snacks",
-    "active": false,
-    "approval": "needs_review"
+    "active": true,
+    "approval": "Approved"
   },
   {
     "id": "6",
@@ -80,8 +80,8 @@
     "variant": "",
     "gtin": "",
     "category": "Imported Snacks",
-    "active": false,
-    "approval": "needs_review"
+    "active": true,
+    "approval": "Approved"
   },
   {
     "id": "7",
@@ -94,8 +94,8 @@
     "variant": "",
     "gtin": "",
     "category": "Imported Snacks",
-    "active": false,
-    "approval": "needs_review"
+    "active": true,
+    "approval": "Approved"
   },
   {
     "id": "8",
@@ -108,8 +108,8 @@
     "variant": "",
     "gtin": "",
     "category": "Imported Snacks",
-    "active": false,
-    "approval": "needs_review"
+    "active": true,
+    "approval": "Approved"
   },
   {
     "id": "9",
@@ -122,8 +122,8 @@
     "variant": "",
     "gtin": "",
     "category": "Imported Snacks",
-    "active": false,
-    "approval": "needs_review"
+    "active": true,
+    "approval": "Approved"
   },
   {
     "id": "10",
@@ -136,8 +136,8 @@
     "variant": "",
     "gtin": "",
     "category": "Imported Snacks",
-    "active": false,
-    "approval": "needs_review"
+    "active": true,
+    "approval": "Approved"
   },
   {
     "id": "11",
@@ -150,8 +150,8 @@
     "variant": "",
     "gtin": "",
     "category": "Imported Snacks",
-    "active": false,
-    "approval": "needs_review"
+    "active": true,
+    "approval": "Approved"
   },
   {
     "id": "12",
@@ -164,8 +164,8 @@
     "variant": "",
     "gtin": "",
     "category": "Imported Snacks",
-    "active": false,
-    "approval": "needs_review"
+    "active": true,
+    "approval": "Approved"
   },
   {
     "id": "13",
@@ -178,8 +178,8 @@
     "variant": "",
     "gtin": "",
     "category": "Imported Snacks",
-    "active": false,
-    "approval": "needs_review"
+    "active": true,
+    "approval": "Approved"
   },
   {
     "id": "14",
@@ -192,8 +192,8 @@
     "variant": "",
     "gtin": "",
     "category": "Imported Snacks",
-    "active": false,
-    "approval": "needs_review"
+    "active": true,
+    "approval": "Approved"
   },
   {
     "id": "15",
@@ -206,8 +206,8 @@
     "variant": "",
     "gtin": "",
     "category": "Imported Snacks",
-    "active": false,
-    "approval": "needs_review"
+    "active": true,
+    "approval": "Approved"
   },
   {
     "id": "16",
@@ -220,8 +220,8 @@
     "variant": "",
     "gtin": "",
     "category": "Imported Snacks",
-    "active": false,
-    "approval": "needs_review"
+    "active": true,
+    "approval": "Approved"
   },
   {
     "id": "17",
@@ -234,8 +234,8 @@
     "variant": "",
     "gtin": "",
     "category": "Imported Snacks",
-    "active": false,
-    "approval": "needs_review"
+    "active": true,
+    "approval": "Approved"
   },
   {
     "id": "18",
@@ -248,8 +248,8 @@
     "variant": "",
     "gtin": "",
     "category": "Imported Snacks",
-    "active": false,
-    "approval": "needs_review"
+    "active": true,
+    "approval": "Approved"
   },
   {
     "id": "19",
@@ -262,8 +262,8 @@
     "variant": "",
     "gtin": "",
     "category": "Imported Snacks",
-    "active": false,
-    "approval": "needs_review"
+    "active": true,
+    "approval": "Approved"
   },
   {
     "id": "20",
@@ -276,8 +276,8 @@
     "variant": "",
     "gtin": "",
     "category": "Imported Snacks",
-    "active": false,
-    "approval": "needs_review"
+    "active": true,
+    "approval": "Approved"
   },
   {
     "id": "21",
@@ -290,8 +290,8 @@
     "variant": "250g",
     "gtin": "",
     "category": "Imported Snacks",
-    "active": false,
-    "approval": "needs_review"
+    "active": true,
+    "approval": "Approved"
   },
   {
     "id": "22",
@@ -304,8 +304,8 @@
     "variant": "80.85g",
     "gtin": "",
     "category": "Imported Snacks",
-    "active": false,
-    "approval": "needs_review"
+    "active": true,
+    "approval": "Approved"
   },
   {
     "id": "23",
@@ -318,8 +318,8 @@
     "variant": "104g",
     "gtin": "",
     "category": "Imported Snacks",
-    "active": false,
-    "approval": "needs_review"
+    "active": true,
+    "approval": "Approved"
   },
   {
     "id": "24",
@@ -332,8 +332,8 @@
     "variant": "22g",
     "gtin": "",
     "category": "Imported Snacks",
-    "active": false,
-    "approval": "needs_review"
+    "active": true,
+    "approval": "Approved"
   },
   {
     "id": "25",
@@ -346,8 +346,8 @@
     "variant": "80.8g",
     "gtin": "",
     "category": "Imported Snacks",
-    "active": false,
-    "approval": "needs_review"
+    "active": true,
+    "approval": "Approved"
   },
   {
     "id": "26",
@@ -360,8 +360,8 @@
     "variant": "250g",
     "gtin": "",
     "category": "Imported Snacks",
-    "active": false,
-    "approval": "needs_review"
+    "active": true,
+    "approval": "Approved"
   },
   {
     "id": "27",
@@ -374,8 +374,8 @@
     "variant": "24pc",
     "gtin": "",
     "category": "Imported Snacks",
-    "active": false,
-    "approval": "needs_review"
+    "active": true,
+    "approval": "Approved"
   },
   {
     "id": "28",
@@ -388,8 +388,8 @@
     "variant": "24pc",
     "gtin": "",
     "category": "Imported Snacks",
-    "active": false,
-    "approval": "needs_review"
+    "active": true,
+    "approval": "Approved"
   },
   {
     "id": "29",
@@ -402,8 +402,8 @@
     "variant": "12 Piece",
     "gtin": "",
     "category": "Imported Snacks",
-    "active": false,
-    "approval": "needs_review"
+    "active": true,
+    "approval": "Approved"
   },
   {
     "id": "30",
@@ -416,8 +416,8 @@
     "variant": "90g",
     "gtin": "",
     "category": "Imported Snacks",
-    "active": false,
-    "approval": "needs_review"
+    "active": true,
+    "approval": "Approved"
   },
   {
     "id": "31",
@@ -430,8 +430,8 @@
     "variant": "90g",
     "gtin": "",
     "category": "Imported Snacks",
-    "active": false,
-    "approval": "needs_review"
+    "active": true,
+    "approval": "Approved"
   },
   {
     "id": "32",
@@ -444,8 +444,8 @@
     "variant": "90g",
     "gtin": "",
     "category": "Imported Snacks",
-    "active": false,
-    "approval": "needs_review"
+    "active": true,
+    "approval": "Approved"
   },
   {
     "id": "33",
@@ -458,8 +458,8 @@
     "variant": "80g",
     "gtin": "",
     "category": "Imported Snacks",
-    "active": false,
-    "approval": "needs_review"
+    "active": true,
+    "approval": "Approved"
   },
   {
     "id": "34",
@@ -472,8 +472,8 @@
     "variant": "24pc",
     "gtin": "",
     "category": "Imported Snacks",
-    "active": false,
-    "approval": "needs_review"
+    "active": true,
+    "approval": "Approved"
   },
   {
     "id": "35",
@@ -486,8 +486,8 @@
     "variant": "180g",
     "gtin": "",
     "category": "Imported Snacks",
-    "active": false,
-    "approval": "needs_review"
+    "active": true,
+    "approval": "Approved"
   },
   {
     "id": "36",
@@ -500,8 +500,8 @@
     "variant": "90g",
     "gtin": "",
     "category": "Imported Snacks",
-    "active": false,
-    "approval": "needs_review"
+    "active": true,
+    "approval": "Approved"
   },
   {
     "id": "37",
@@ -514,8 +514,8 @@
     "variant": "90g",
     "gtin": "",
     "category": "Imported Snacks",
-    "active": false,
-    "approval": "needs_review"
+    "active": true,
+    "approval": "Approved"
   },
   {
     "id": "38",
@@ -528,8 +528,8 @@
     "variant": "90g",
     "gtin": "",
     "category": "Imported Snacks",
-    "active": false,
-    "approval": "needs_review"
+    "active": true,
+    "approval": "Approved"
   },
   {
     "id": "39",
@@ -542,8 +542,8 @@
     "variant": "90g",
     "gtin": "",
     "category": "Imported Snacks",
-    "active": false,
-    "approval": "needs_review"
+    "active": true,
+    "approval": "Approved"
   },
   {
     "id": "40",
@@ -556,8 +556,8 @@
     "variant": "333g",
     "gtin": "",
     "category": "Imported Snacks",
-    "active": false,
-    "approval": "needs_review"
+    "active": true,
+    "approval": "Approved"
   },
   {
     "id": "41",
@@ -570,8 +570,8 @@
     "variant": "333g",
     "gtin": "",
     "category": "Imported Snacks",
-    "active": false,
-    "approval": "needs_review"
+    "active": true,
+    "approval": "Approved"
   },
   {
     "id": "42",
@@ -584,8 +584,8 @@
     "variant": "333g",
     "gtin": "",
     "category": "Imported Snacks",
-    "active": false,
-    "approval": "needs_review"
+    "active": true,
+    "approval": "Approved"
   },
   {
     "id": "43",
@@ -598,8 +598,8 @@
     "variant": "250g",
     "gtin": "",
     "category": "Imported Snacks",
-    "active": false,
-    "approval": "needs_review"
+    "active": true,
+    "approval": "Approved"
   },
   {
     "id": "44",
@@ -612,8 +612,8 @@
     "variant": "250g",
     "gtin": "",
     "category": "Imported Snacks",
-    "active": false,
-    "approval": "needs_review"
+    "active": true,
+    "approval": "Approved"
   },
   {
     "id": "45",
@@ -626,8 +626,8 @@
     "variant": "100g",
     "gtin": "",
     "category": "Imported Snacks",
-    "active": false,
-    "approval": "needs_review"
+    "active": true,
+    "approval": "Approved"
   },
   {
     "id": "46",
@@ -640,8 +640,8 @@
     "variant": "80g",
     "gtin": "",
     "category": "Imported Snacks",
-    "active": false,
-    "approval": "needs_review"
+    "active": true,
+    "approval": "Approved"
   },
   {
     "id": "47",
@@ -654,8 +654,8 @@
     "variant": "100g",
     "gtin": "",
     "category": "Imported Snacks",
-    "active": false,
-    "approval": "needs_review"
+    "active": true,
+    "approval": "Approved"
   },
   {
     "id": "48",
@@ -668,8 +668,8 @@
     "variant": "100g",
     "gtin": "",
     "category": "Imported Snacks",
-    "active": false,
-    "approval": "needs_review"
+    "active": true,
+    "approval": "Approved"
   },
   {
     "id": "49",
@@ -682,8 +682,8 @@
     "variant": "100g",
     "gtin": "",
     "category": "Imported Snacks",
-    "active": false,
-    "approval": "needs_review"
+    "active": true,
+    "approval": "Approved"
   },
   {
     "id": "50",
@@ -696,8 +696,8 @@
     "variant": "80g",
     "gtin": "",
     "category": "Imported Snacks",
-    "active": false,
-    "approval": "needs_review"
+    "active": true,
+    "approval": "Approved"
   },
   {
     "id": "51",
@@ -710,8 +710,8 @@
     "variant": "80g",
     "gtin": "",
     "category": "Imported Snacks",
-    "active": false,
-    "approval": "needs_review"
+    "active": true,
+    "approval": "Approved"
   },
   {
     "id": "52",
@@ -724,8 +724,8 @@
     "variant": "90g",
     "gtin": "",
     "category": "Imported Snacks",
-    "active": false,
-    "approval": "needs_review"
+    "active": true,
+    "approval": "Approved"
   },
   {
     "id": "53",
@@ -738,8 +738,8 @@
     "variant": "90g",
     "gtin": "",
     "category": "Imported Snacks",
-    "active": false,
-    "approval": "needs_review"
+    "active": true,
+    "approval": "Approved"
   },
   {
     "id": "54",
@@ -752,8 +752,8 @@
     "variant": "12pc",
     "gtin": "",
     "category": "Imported Snacks",
-    "active": false,
-    "approval": "needs_review"
+    "active": true,
+    "approval": "Approved"
   },
   {
     "id": "55",
@@ -766,8 +766,8 @@
     "variant": "120g",
     "gtin": "",
     "category": "Imported Snacks",
-    "active": false,
-    "approval": "needs_review"
+    "active": true,
+    "approval": "Approved"
   },
   {
     "id": "56",
@@ -780,8 +780,8 @@
     "variant": "80g",
     "gtin": "",
     "category": "Imported Snacks",
-    "active": false,
-    "approval": "needs_review"
+    "active": true,
+    "approval": "Approved"
   },
   {
     "id": "57",
@@ -794,8 +794,8 @@
     "variant": "115g",
     "gtin": "",
     "category": "Imported Snacks",
-    "active": false,
-    "approval": "needs_review"
+    "active": true,
+    "approval": "Approved"
   },
   {
     "id": "58",
@@ -808,8 +808,8 @@
     "variant": "100g",
     "gtin": "",
     "category": "Imported Snacks",
-    "active": false,
-    "approval": "needs_review"
+    "active": true,
+    "approval": "Approved"
   },
   {
     "id": "59",
@@ -822,8 +822,8 @@
     "variant": "100g",
     "gtin": "",
     "category": "Imported Snacks",
-    "active": false,
-    "approval": "needs_review"
+    "active": true,
+    "approval": "Approved"
   },
   {
     "id": "60",
@@ -836,8 +836,8 @@
     "variant": "100g",
     "gtin": "",
     "category": "Imported Snacks",
-    "active": false,
-    "approval": "needs_review"
+    "active": true,
+    "approval": "Approved"
   },
   {
     "id": "61",
@@ -850,8 +850,8 @@
     "variant": "200g",
     "gtin": "",
     "category": "Imported Snacks",
-    "active": false,
-    "approval": "needs_review"
+    "active": true,
+    "approval": "Approved"
   },
   {
     "id": "62",
@@ -864,8 +864,8 @@
     "variant": "200g",
     "gtin": "",
     "category": "Imported Snacks",
-    "active": false,
-    "approval": "needs_review"
+    "active": true,
+    "approval": "Approved"
   },
   {
     "id": "63",
@@ -878,8 +878,8 @@
     "variant": "312g",
     "gtin": "",
     "category": "Imported Snacks",
-    "active": false,
-    "approval": "needs_review"
+    "active": true,
+    "approval": "Approved"
   },
   {
     "id": "64",
@@ -892,8 +892,8 @@
     "variant": "100g",
     "gtin": "",
     "category": "Imported Snacks",
-    "active": false,
-    "approval": "needs_review"
+    "active": true,
+    "approval": "Approved"
   },
   {
     "id": "65",
@@ -906,8 +906,8 @@
     "variant": "100g",
     "gtin": "",
     "category": "Imported Snacks",
-    "active": false,
-    "approval": "needs_review"
+    "active": true,
+    "approval": "Approved"
   },
   {
     "id": "66",
@@ -920,8 +920,8 @@
     "variant": "100g",
     "gtin": "",
     "category": "Imported Snacks",
-    "active": false,
-    "approval": "needs_review"
+    "active": true,
+    "approval": "Approved"
   },
   {
     "id": "67",
@@ -934,8 +934,8 @@
     "variant": "100g",
     "gtin": "",
     "category": "Imported Snacks",
-    "active": false,
-    "approval": "needs_review"
+    "active": true,
+    "approval": "Approved"
   },
   {
     "id": "68",
@@ -948,8 +948,8 @@
     "variant": "333g",
     "gtin": "",
     "category": "Imported Snacks",
-    "active": false,
-    "approval": "needs_review"
+    "active": true,
+    "approval": "Approved"
   },
   {
     "id": "69",
@@ -962,8 +962,8 @@
     "variant": "100g",
     "gtin": "",
     "category": "Imported Snacks",
-    "active": false,
-    "approval": "needs_review"
+    "active": true,
+    "approval": "Approved"
   },
   {
     "id": "70",
@@ -976,8 +976,8 @@
     "variant": "100g",
     "gtin": "",
     "category": "Imported Snacks",
-    "active": false,
-    "approval": "needs_review"
+    "active": true,
+    "approval": "Approved"
   },
   {
     "id": "71",
@@ -990,8 +990,8 @@
     "variant": "100g",
     "gtin": "",
     "category": "Imported Snacks",
-    "active": false,
-    "approval": "needs_review"
+    "active": true,
+    "approval": "Approved"
   },
   {
     "id": "72",
@@ -1004,8 +1004,8 @@
     "variant": "100g",
     "gtin": "",
     "category": "Imported Snacks",
-    "active": false,
-    "approval": "needs_review"
+    "active": true,
+    "approval": "Approved"
   },
   {
     "id": "73",
@@ -1018,8 +1018,8 @@
     "variant": "250g",
     "gtin": "",
     "category": "Imported Snacks",
-    "active": false,
-    "approval": "needs_review"
+    "active": true,
+    "approval": "Approved"
   },
   {
     "id": "74",
@@ -1032,8 +1032,8 @@
     "variant": "250g",
     "gtin": "",
     "category": "Imported Snacks",
-    "active": false,
-    "approval": "needs_review"
+    "active": true,
+    "approval": "Approved"
   },
   {
     "id": "75",
@@ -1046,8 +1046,8 @@
     "variant": "250g",
     "gtin": "",
     "category": "Imported Snacks",
-    "active": false,
-    "approval": "needs_review"
+    "active": true,
+    "approval": "Approved"
   },
   {
     "id": "76",
@@ -1060,8 +1060,8 @@
     "variant": "250g",
     "gtin": "",
     "category": "Imported Snacks",
-    "active": false,
-    "approval": "needs_review"
+    "active": true,
+    "approval": "Approved"
   },
   {
     "id": "77",
@@ -1074,8 +1074,8 @@
     "variant": "250g",
     "gtin": "",
     "category": "Imported Snacks",
-    "active": false,
-    "approval": "needs_review"
+    "active": true,
+    "approval": "Approved"
   },
   {
     "id": "78",
@@ -1088,8 +1088,8 @@
     "variant": "253g",
     "gtin": "",
     "category": "Imported Snacks",
-    "active": false,
-    "approval": "needs_review"
+    "active": true,
+    "approval": "Approved"
   },
   {
     "id": "79",
@@ -1102,8 +1102,8 @@
     "variant": "300g",
     "gtin": "",
     "category": "Imported Snacks",
-    "active": false,
-    "approval": "needs_review"
+    "active": true,
+    "approval": "Approved"
   },
   {
     "id": "80",
@@ -1116,8 +1116,8 @@
     "variant": "100g",
     "gtin": "",
     "category": "Imported Snacks",
-    "active": false,
-    "approval": "needs_review"
+    "active": true,
+    "approval": "Approved"
   },
   {
     "id": "81",
@@ -1130,8 +1130,8 @@
     "variant": "150g",
     "gtin": "",
     "category": "Imported Snacks",
-    "active": false,
-    "approval": "needs_review"
+    "active": true,
+    "approval": "Approved"
   },
   {
     "id": "82",
@@ -1144,8 +1144,8 @@
     "variant": "150g",
     "gtin": "",
     "category": "Imported Snacks",
-    "active": false,
-    "approval": "needs_review"
+    "active": true,
+    "approval": "Approved"
   },
   {
     "id": "83",
@@ -1158,8 +1158,8 @@
     "variant": "298g",
     "gtin": "",
     "category": "Imported Snacks",
-    "active": false,
-    "approval": "needs_review"
+    "active": true,
+    "approval": "Approved"
   },
   {
     "id": "84",
@@ -1172,8 +1172,8 @@
     "variant": "100g",
     "gtin": "",
     "category": "Imported Snacks",
-    "active": false,
-    "approval": "needs_review"
+    "active": true,
+    "approval": "Approved"
   },
   {
     "id": "85",
@@ -1186,8 +1186,8 @@
     "variant": "100g",
     "gtin": "",
     "category": "Imported Snacks",
-    "active": false,
-    "approval": "needs_review"
+    "active": true,
+    "approval": "Approved"
   },
   {
     "id": "86",
@@ -1200,8 +1200,8 @@
     "variant": "37g",
     "gtin": "",
     "category": "Imported Snacks",
-    "active": false,
-    "approval": "needs_review"
+    "active": true,
+    "approval": "Approved"
   },
   {
     "id": "87",
@@ -1214,8 +1214,8 @@
     "variant": "45g",
     "gtin": "",
     "category": "Imported Snacks",
-    "active": false,
-    "approval": "needs_review"
+    "active": true,
+    "approval": "Approved"
   },
   {
     "id": "88",
@@ -1228,8 +1228,8 @@
     "variant": "45g",
     "gtin": "",
     "category": "Imported Snacks",
-    "active": false,
-    "approval": "needs_review"
+    "active": true,
+    "approval": "Approved"
   },
   {
     "id": "89",
@@ -1242,8 +1242,8 @@
     "variant": "500g",
     "gtin": "",
     "category": "Imported Snacks",
-    "active": false,
-    "approval": "needs_review"
+    "active": true,
+    "approval": "Approved"
   },
   {
     "id": "90",
@@ -1256,8 +1256,8 @@
     "variant": "375g",
     "gtin": "",
     "category": "Imported Snacks",
-    "active": false,
-    "approval": "needs_review"
+    "active": true,
+    "approval": "Approved"
   },
   {
     "id": "91",
@@ -1270,8 +1270,8 @@
     "variant": "289g",
     "gtin": "",
     "category": "Imported Snacks",
-    "active": false,
-    "approval": "needs_review"
+    "active": true,
+    "approval": "Approved"
   },
   {
     "id": "92",
@@ -1284,8 +1284,8 @@
     "variant": "294g",
     "gtin": "",
     "category": "Imported Snacks",
-    "active": false,
-    "approval": "needs_review"
+    "active": true,
+    "approval": "Approved"
   },
   {
     "id": "93",
@@ -1298,8 +1298,8 @@
     "variant": "440g",
     "gtin": "",
     "category": "Imported Snacks",
-    "active": false,
-    "approval": "needs_review"
+    "active": true,
+    "approval": "Approved"
   },
   {
     "id": "94",
@@ -1312,8 +1312,8 @@
     "variant": "400g",
     "gtin": "",
     "category": "Imported Snacks",
-    "active": false,
-    "approval": "needs_review"
+    "active": true,
+    "approval": "Approved"
   },
   {
     "id": "95",
@@ -1326,8 +1326,8 @@
     "variant": "200g",
     "gtin": "",
     "category": "Imported Snacks",
-    "active": false,
-    "approval": "needs_review"
+    "active": true,
+    "approval": "Approved"
   },
   {
     "id": "96",
@@ -1340,8 +1340,8 @@
     "variant": "100g",
     "gtin": "",
     "category": "Imported Snacks",
-    "active": false,
-    "approval": "needs_review"
+    "active": true,
+    "approval": "Approved"
   },
   {
     "id": "97",
@@ -1354,8 +1354,8 @@
     "variant": "100g",
     "gtin": "",
     "category": "Imported Snacks",
-    "active": false,
-    "approval": "needs_review"
+    "active": true,
+    "approval": "Approved"
   },
   {
     "id": "98",
@@ -1368,8 +1368,8 @@
     "variant": "50g",
     "gtin": "",
     "category": "Imported Snacks",
-    "active": false,
-    "approval": "needs_review"
+    "active": true,
+    "approval": "Approved"
   },
   {
     "id": "99",
@@ -1382,8 +1382,8 @@
     "variant": "50g",
     "gtin": "",
     "category": "Imported Snacks",
-    "active": false,
-    "approval": "needs_review"
+    "active": true,
+    "approval": "Approved"
   },
   {
     "id": "100",
@@ -1396,8 +1396,8 @@
     "variant": "175g",
     "gtin": "",
     "category": "Imported Snacks",
-    "active": false,
-    "approval": "needs_review"
+    "active": true,
+    "approval": "Approved"
   },
   {
     "id": "101",
@@ -1410,8 +1410,8 @@
     "variant": "42g",
     "gtin": "",
     "category": "Imported Snacks",
-    "active": false,
-    "approval": "needs_review"
+    "active": true,
+    "approval": "Approved"
   },
   {
     "id": "102",
@@ -1424,8 +1424,8 @@
     "variant": "460g",
     "gtin": "",
     "category": "Imported Snacks",
-    "active": false,
-    "approval": "needs_review"
+    "active": true,
+    "approval": "Approved"
   },
   {
     "id": "103",
@@ -1438,8 +1438,8 @@
     "variant": "43g",
     "gtin": "",
     "category": "Imported Snacks",
-    "active": false,
-    "approval": "needs_review"
+    "active": true,
+    "approval": "Approved"
   },
   {
     "id": "104",
@@ -1452,8 +1452,8 @@
     "variant": "400g",
     "gtin": "",
     "category": "Imported Snacks",
-    "active": false,
-    "approval": "needs_review"
+    "active": true,
+    "approval": "Approved"
   },
   {
     "id": "105",
@@ -1466,8 +1466,8 @@
     "variant": "200g",
     "gtin": "",
     "category": "Imported Snacks",
-    "active": false,
-    "approval": "needs_review"
+    "active": true,
+    "approval": "Approved"
   },
   {
     "id": "106",
@@ -1480,8 +1480,8 @@
     "variant": "100g",
     "gtin": "",
     "category": "Imported Snacks",
-    "active": false,
-    "approval": "needs_review"
+    "active": true,
+    "approval": "Approved"
   },
   {
     "id": "107",
@@ -1494,8 +1494,8 @@
     "variant": "200g",
     "gtin": "",
     "category": "Imported Snacks",
-    "active": false,
-    "approval": "needs_review"
+    "active": true,
+    "approval": "Approved"
   },
   {
     "id": "108",
@@ -1508,8 +1508,8 @@
     "variant": "100g",
     "gtin": "",
     "category": "Imported Snacks",
-    "active": false,
-    "approval": "needs_review"
+    "active": true,
+    "approval": "Approved"
   },
   {
     "id": "109",
@@ -1522,8 +1522,8 @@
     "variant": "100g",
     "gtin": "",
     "category": "Imported Snacks",
-    "active": false,
-    "approval": "needs_review"
+    "active": true,
+    "approval": "Approved"
   },
   {
     "id": "110",
@@ -1536,8 +1536,8 @@
     "variant": "100g",
     "gtin": "",
     "category": "Imported Snacks",
-    "active": false,
-    "approval": "needs_review"
+    "active": true,
+    "approval": "Approved"
   },
   {
     "id": "111",
@@ -1550,8 +1550,8 @@
     "variant": "100g",
     "gtin": "",
     "category": "Imported Snacks",
-    "active": false,
-    "approval": "needs_review"
+    "active": true,
+    "approval": "Approved"
   },
   {
     "id": "112",
@@ -1564,8 +1564,8 @@
     "variant": "100g",
     "gtin": "",
     "category": "Imported Snacks",
-    "active": false,
-    "approval": "needs_review"
+    "active": true,
+    "approval": "Approved"
   },
   {
     "id": "113",
@@ -1578,8 +1578,8 @@
     "variant": "100g",
     "gtin": "",
     "category": "Imported Snacks",
-    "active": false,
-    "approval": "needs_review"
+    "active": true,
+    "approval": "Approved"
   },
   {
     "id": "114",
@@ -1592,8 +1592,8 @@
     "variant": "100g",
     "gtin": "",
     "category": "Imported Snacks",
-    "active": false,
-    "approval": "needs_review"
+    "active": true,
+    "approval": "Approved"
   },
   {
     "id": "115",
@@ -1606,8 +1606,8 @@
     "variant": "100g",
     "gtin": "",
     "category": "Imported Snacks",
-    "active": false,
-    "approval": "needs_review"
+    "active": true,
+    "approval": "Approved"
   },
   {
     "id": "116",
@@ -1620,8 +1620,8 @@
     "variant": "100g",
     "gtin": "",
     "category": "Imported Snacks",
-    "active": false,
-    "approval": "needs_review"
+    "active": true,
+    "approval": "Approved"
   },
   {
     "id": "117",
@@ -1634,8 +1634,8 @@
     "variant": "100g",
     "gtin": "",
     "category": "Imported Snacks",
-    "active": false,
-    "approval": "needs_review"
+    "active": true,
+    "approval": "Approved"
   },
   {
     "id": "118",
@@ -1648,8 +1648,8 @@
     "variant": "100g",
     "gtin": "",
     "category": "Imported Snacks",
-    "active": false,
-    "approval": "needs_review"
+    "active": true,
+    "approval": "Approved"
   },
   {
     "id": "119",
@@ -1662,8 +1662,8 @@
     "variant": "100g",
     "gtin": "",
     "category": "Imported Snacks",
-    "active": false,
-    "approval": "needs_review"
+    "active": true,
+    "approval": "Approved"
   },
   {
     "id": "120",
@@ -1676,7 +1676,7 @@
     "variant": "43g",
     "gtin": "",
     "category": "Imported Snacks",
-    "active": false,
-    "approval": "needs_review"
+    "active": true,
+    "approval": "Approved"
   }
 ]
