@@ -48,10 +48,22 @@ function categoriesAndBrands() {
   $("categoryFilter").innerHTML = '<option value="">All categories</option>' + categories.map(v => `<option value="${esc(v)}">${esc(v)}</option>`).join("");
   $("brandFilter").innerHTML = '<option value="">All brands</option>' + brands.map(v => `<option value="${esc(v)}">${esc(v)}</option>`).join("");
   $("categoryPills").innerHTML = ['All', ...categories].map((v,i) => `<button class="category-pill ${i===0?'active':''}" data-category="${i===0?'':esc(v)}">${esc(v)}</button>`).join("");
-  $("brandStrip").innerHTML = brands.map((brand,i) => `<button class="brand-tile" data-brand="${esc(brand)}"><span class="brand-monogram">${esc(brand.replace(/[^a-z0-9]/gi,'').slice(0,2).toUpperCase() || 'GS')}</span><span>${esc(brand)}</span></button>`).join("") || '<span class="brand-loading">Brands will appear as products are published.</span>';
+  $("brandStrip").innerHTML = brands.map(brand => `<button class="brand-tile" data-brand="${esc(brand)}"><span class="brand-mark-mini">${esc(brand.replace(/[^a-z0-9]/gi,'').slice(0,2).toUpperCase() || 'GS')}</span><span class="brand-tile-name">${esc(brand)}</span><span class="brand-tile-arrow">↗</span></button>`).join("") || '<span class="brand-loading">Brands will appear as products are published.</span>';
   $("menuCategories").innerHTML = categories.map(v => `<button class="menu-filter-link" data-menu-category="${esc(v)}">${esc(v)} <span>↗</span></button>`).join("") || '<p class="menu-empty">Categories will appear as products are published.</p>';
-  $("menuBrands").innerHTML = brands.map(v => `<button class="menu-filter-link" data-menu-brand="${esc(v)}">${esc(v)} <span>↗</span></button>`).join("") || '<p class="menu-empty">Brands will appear as products are published.</p>';
+  $("menuBrands").innerHTML = brands.map(v => `<button class="menu-filter-link menu-brand-link" data-menu-brand="${esc(v)}"><span class="menu-brand-mark">${esc(v.replace(/[^a-z0-9]/gi,'').slice(0,2).toUpperCase() || 'GS')}</span><strong>${esc(v)}</strong><span>↗</span></button>`).join("") || '<p class="menu-empty">Brands will appear as products are published.</p>';
+  renderHeroPoster(brands);
 }
+function renderHeroPoster(brands) {
+  const seen = new Set();
+  const picks = [];
+  for (const p of products) {
+    const key = String(p.brand || "Global Snack").trim().toLowerCase();
+    if (!seen.has(key) && p.image) { seen.add(key); picks.push(p); }
+    if (picks.length >= 9) break;
+  }
+  $("heroPoster").innerHTML = picks.length ? picks.map((p,i) => `<div class="poster-product poster-product-${i+1}"><img src="${esc(p.image)}" alt="${esc(p.name)}" loading="lazy" onerror="this.closest('.poster-product').classList.add('poster-image-error');this.remove()"><span>${esc(p.brand || "Imported Treat")}</span></div>`).join("") : '<div class="poster-fallback">A WORLD OF<br>IMPORTED TREATS</div>';
+}
+
 function getFilteredProducts() {
   const query = $("searchInput").value.toLowerCase().trim();
   const category = $("categoryFilter").value; const brand = $("brandFilter").value;
