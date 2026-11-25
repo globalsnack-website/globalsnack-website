@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Explore imported chocolates, snacks, biscuits and treats at Global Snack. Send one combined product enquiry on WhatsApp.">
+<title>Global Snack | Imported Chocolates & Snacks</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="topline">IMPORTED TREATS • RETAIL & WHOLESALE ENQUIRIES</div>
+<header class="header">
+  <a class="brand" href="#"><span class="brand-mark">G</span><span>GLOBAL<span class="brand-light">SNACK</span><small>CHOCOLATES · SNACKS · MORE</small></span></a>
+  <nav><a href="#catalogue">Catalogue</a><a href="#about">About</a><button class="cart-open" id="cartOpen">Enquiry list <span id="cartCount">0</span></button></nav>
+</header>
+<section class="hero">
+  <div class="hero-copy">
+    <div class="eyebrow">A WORLD OF FLAVOUR</div>
+    <h1>Discover your next<br><em>favourite treat.</em></h1>
+    <p>Explore our selection of imported chocolates, biscuits, snacks and beverages. Add your favourites to one enquiry and reach us directly on WhatsApp.</p>
+    <a class="primary-link" href="#catalogue">Explore catalogue <span>↘</span></a>
+    <div class="hero-note"><span class="dot"></span> Retail & wholesale enquiries welcome</div>
+  </div>
+  <div class="hero-art"><div class="art-circle"></div><div class="art-label">THE<br>GOOD<br>STUFF.</div><div class="art-chip chip-one">CHOCOLATE</div><div class="art-chip chip-two">HAPPINESS</div></div>
+</section>
+<main id="catalogue" class="catalogue">
+  <div class="section-head"><div><div class="eyebrow">THE COLLECTION</div><h2>Explore our catalogue</h2><p>Find a product and add it to your enquiry list.</p></div><div class="count-label" id="resultCount">Loading products…</div></div>
+  <div class="toolbar"><label class="search"><span>⌕</span><input id="searchInput" type="search" placeholder="Search products or brands…"></label><select id="categoryFilter"><option value="">All categories</option></select><select id="brandFilter"><option value="">All brands</option></select></div>
+  <div id="notice" class="notice hidden"></div>
+  <div id="productGrid" class="product-grid"></div>
+  <div id="emptyState" class="empty hidden"><div>🍫</div><h3>No products found</h3><p>Try another search or category.</p></div>
+</main>
+<section id="about" class="about"><div><div class="eyebrow">GLOBAL SNACK</div><h2>Good treats.<br><em>Great discoveries.</em></h2></div><p>Global Snack brings together a curated range of international chocolates, snacks and treats. Browse the catalogue and send us one combined enquiry for the products you want.</p></section>
+<footer><a class="brand footer-brand" href="#"><span class="brand-mark">G</span><span>GLOBAL<span class="brand-light">SNACK</span><small>CHOCOLATES · SNACKS · MORE</small></span></a><span>© <span id="year"></span> Global Snack. All rights reserved.</span><a href="#catalogue">Back to catalogue ↑</a></footer>
+<div id="cartOverlay" class="overlay hidden"></div>
+<aside id="cartDrawer" class="drawer" aria-label="Enquiry list" aria-hidden="true">
+ <div class="drawer-head"><div><div class="eyebrow">YOUR SELECTION</div><h2>Enquiry list</h2></div><button id="cartClose" class="icon-btn" aria-label="Close">×</button></div>
+ <div id="cartItems" class="cart-items"></div>
+ <div id="cartEmpty" class="cart-empty">Your enquiry list is empty.<br>Add products from the catalogue.</div>
+ <div class="customer-form">
+  <label>Your name<input id="customerName" placeholder="Name"></label>
+  <label>City<input id="customerCity" placeholder="City"></label>
+  <label>Enquiry type<select id="customerType"><option>Retail</option><option>Wholesale</option></select></label>
+  <button id="sendWhatsApp" class="whatsapp-btn">Send enquiry on WhatsApp ↗</button>
+  <p class="privacy-note">Your selected products and details will be sent to Global Snack via WhatsApp.</p>
+ </div>
+</aside>
+<script src="app.js"></script>
+</body></html>
