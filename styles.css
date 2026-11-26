@@ -238,3 +238,26 @@ body{background:var(--paper);color:var(--espresso)}
   .category-banner{border-radius:8px}
   .brand-card{border-radius:7px}
 }
+
+/* Reliability fixes: keep the enquiry controls and interactive tiles accessible */
+#cartOpen,#menuOpen{position:relative;z-index:12;pointer-events:auto}
+.drawer-overlay{z-index:100;pointer-events:auto}
+.side-drawer{z-index:101;pointer-events:none}
+.side-drawer.open{transform:translateX(0)!important;pointer-events:auto}
+#cartDrawer.open,#menuDrawer.open{visibility:visible}
+.quantity-control.live-quantity{display:flex!important;visibility:visible!important;opacity:1!important;align-items:center;gap:0;height:36px;min-width:116px;border:1px solid var(--line);background:#fff;border-radius:4px;overflow:hidden;flex:0 0 auto}
+.quantity-control.live-quantity button{display:grid!important;visibility:visible!important;opacity:1!important;place-items:center;width:36px;height:34px;min-width:36px;border:0;background:#f2e8da;color:var(--espresso);font-size:20px;line-height:1;cursor:pointer;pointer-events:auto}
+.quantity-control.live-quantity button:disabled{opacity:.4!important}
+.quantity-control.live-quantity output{display:grid!important;visibility:visible!important;place-items:center;min-width:42px;height:34px;color:var(--espresso);font-size:13px;font-weight:800;font-variant-numeric:tabular-nums}
+.product-action{display:flex!important;align-items:center;flex-wrap:wrap;gap:8px}
+.poster-product{z-index:2;cursor:pointer;pointer-events:auto;position:relative}
+.poster-product>*{pointer-events:none}
+.hero-poster-grid{position:relative;z-index:3}
+.brand-card-photo.brand-cadbury{background:#fffaf4}
+.brand-card-photo.brand-cadbury img{object-fit:contain;padding:14px;mix-blend-mode:normal}
+.menu-brand-link img{object-fit:contain;mix-blend-mode:normal}
+@media(max-width:760px){
+ .quantity-control.live-quantity{min-width:104px;height:32px}
+ .quantity-control.live-quantity button{width:32px;min-width:32px;height:30px;font-size:18px}
+ .quantity-control.live-quantity output{min-width:36px;height:30px;font-size:12px}
+}

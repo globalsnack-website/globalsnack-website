@@ -3,7 +3,13 @@ const CART_KEY = "globalSnackCart";
 // Add your deployed Google Apps Script Web App URL here after setup.
 const GOOGLE_SHEETS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxkJVuqA7VxnUPyHfvU6PKt5drix-hd1xO8Kh-LoYAM1CABE6HZYavsNCqj3t-PXjk4/exec";
 let products = [];
-let cart = JSON.parse(localStorage.getItem(CART_KEY) || "{}");
+let cart = {};
+try {
+  const savedCart = JSON.parse(localStorage.getItem(CART_KEY) || "{}");
+  if (savedCart && typeof savedCart === "object" && !Array.isArray(savedCart)) cart = savedCart;
+} catch (error) {
+  console.warn("Saved enquiry list was unreadable; starting with an empty list.", error);
+}
 let activeDrawer = null;
 let toastTimer;
 const $ = id => document.getElementById(id);
@@ -48,7 +54,7 @@ function canonicalBrand(value) {
   const raw = String(value || "").trim();
   const lower = raw.toLowerCase();
   if (!raw) return "Global Snack";
-  if (lower.startsWith("cadbury")) return "Cadbury";
+  if (lower.startsWith("cadbury") || lower.includes("cadbury")) return "Cadbury";
   if (lower === "malteser" || lower === "maltesers") return "Maltesers";
   if (lower === "fox burten company") return "Fox's";
   if (lower === "m&m's" || lower === "m & m's") return "M&M's";
@@ -103,15 +109,23 @@ function categoriesAndBrands() {
   $("categoryFilter").innerHTML = '<option value="">All categories</option>' + categories.map(v => `<option value="${esc(v)}">${esc(v)}</option>`).join("");
   $("brandFilter").innerHTML = '<option value="">All brands</option>' + brands.map(v => `<option value="${esc(v)}">${esc(v)}</option>`).join("");
   $("categoryPills").innerHTML = ['All', ...categories].map((v,i) => `<button class="category-pill ${i===0?'active':''}" data-category="${i===0?'':esc(v)}">${esc(v)}</button>`).join("");
-  $("brandStrip").innerHTML = brandGroups.map(group => `<button class="brand-card" data-brand="${esc(group.name)}" aria-label="Browse ${esc(group.name)} products"><span class="brand-card-photo">${group.image ? `<img src="${esc(group.image)}" alt="${esc(group.name)} product" loading="lazy" onerror="this.closest('.brand-card-photo').classList.add('brand-photo-error');this.remove()">` : ''}<span class="brand-photo-count">${group.count} ${group.count===1?'product':'products'}</span></span><span class="brand-card-name">${esc(group.name)}</span><span class="brand-card-link">VIEW COLLECTION ↗</span></button>`).join("") || '<span class="brand-loading">Brands will appear as products are published.</span>';
+  $("brandStrip").innerHTML = brandGroups.map(group => {
+    const logo = group.name === "Cadbury" ? "assets/cadbury-wordmark.svg" : group.image;
+    return `<button class="brand-card" data-brand="${esc(group.name)}" aria-label="Browse ${esc(group.name)} products"><span class="brand-card-photo ${group.name === "Cadbury" ? "brand-cadbury" : ""}">${logo ? `<img src="${esc(logo)}" alt="${esc(group.name)} ${group.name === "Cadbury" ? "wordmark" : "product"}" loading="lazy" onerror="this.closest('.brand-card-photo').classList.add('brand-photo-error');this.remove()">` : ''}<span class="brand-photo-count">${group.count} ${group.count===1?'product':'products'}</span></span><span class="brand-card-name">${esc(group.name)}</span><span class="brand-card-link">VIEW COLLECTION ↗</span></button>`;
+  }).join("") || '<span class="brand-loading">Brands will appear as products are published.</span>';
   $("menuCategories").innerHTML = categories.map(v => `<button class="menu-filter-link" data-menu-category="${esc(v)}">${esc(v)} <span>↗</span></button>`).join("") || '<p class="menu-empty">Categories will appear as products are published.</p>';
-  $("menuBrands").innerHTML = brandGroups.map(group => `<button class="menu-filter-link menu-brand-link" data-menu-brand="${esc(group.name)}">${group.image ? `<img src="${esc(group.image)}" alt="" loading="lazy">` : '<span class="menu-brand-mark">GS</span>'}<strong>${esc(group.name)}</strong><span>↗</span></button>`).join("") || '<p class="menu-empty">Brands will appear as products are published.</p>';
+  $("menuBrands").innerHTML = brandGroups.map(group => {
+    const logo = group.name === "Cadbury" ? "assets/cadbury-wordmark.svg" : group.image;
+    return `<button class="menu-filter-link menu-brand-link" data-menu-brand="${esc(group.name)}">${logo ? `<img src="${esc(logo)}" alt="" loading="lazy">` : '<span class="menu-brand-mark">GS</span>'}<strong>${esc(group.name)}</strong><span>↗</span></button>`;
+  }).join("") || '<p class="menu-empty">Brands will appear as products are published.</p>';
   $("heroBrandProof").innerHTML = brands.length ? `<span>BRANDS YOU LOVE</span><b>${brands.slice(0,5).map(esc).join(' · ')}${brands.length>5?' · MORE':''}</b>` : '<span>BRANDS YOU LOVE</span><b>Imported favourites, coming soon</b>';
   renderHeroPoster(brandGroups);
   renderCategoryBanners();
 }
 function renderHeroPoster(brandGroups) {
-  const picks = brandGroups.map(group => group.items.find(p => p.image) || group.items[0]).filter(Boolean).slice(0,6);
+  const preferred = ["Cadbury", "Ferrero", "Hershey's", "Lindt", "Toblerone", "Milka"];
+  const ordered = [...preferred.map(name => brandGroups.find(group => group.name.toLowerCase() === name.toLowerCase())).filter(Boolean), ...brandGroups.filter(group => !preferred.some(name => group.name.toLowerCase() === name.toLowerCase()))];
+  const picks = ordered.map(group => group.items.find(p => p.image) || group.items[0]).filter(Boolean).slice(0,6);
   $("heroPoster").innerHTML = picks.length ? picks.map((p,i) => `<button type="button" class="poster-product poster-product-${i+1}" data-poster-brand="${esc(canonicalBrand(p.brand))}" aria-label="Browse ${esc(canonicalBrand(p.brand))}"><span class="poster-image-wrap">${p.image ? `<img src="${esc(p.image)}" alt="${esc(p.name)}" loading="lazy" onerror="this.closest('.poster-product').classList.add('poster-image-error');this.remove()">` : ''}</span><span class="poster-brand-name">${esc(canonicalBrand(p.brand))}</span></button>`).join("") : '<div class="poster-fallback">ACTIVATE YOUR APPROVED PRODUCTS<br>TO SHOW YOUR REAL BRANDS HERE</div>';
 }
 function getFilteredProducts() {
@@ -219,14 +233,24 @@ $("cartItems").addEventListener("click", event => {
 });
 $("cartItems").addEventListener("change", event => { if(event.target.matches("[data-cart-input]")) setCartQty(event.target.dataset.cartInput,Number(event.target.value)); });
 $("brandStrip").addEventListener("click", event => { const tile=event.target.closest("[data-brand]"); if(tile) applyBrand(tile.dataset.brand); });
-$("heroPoster").addEventListener("click", event => { const tile=event.target.closest("[data-poster-brand]"); if(tile) applyBrand(tile.dataset.posterBrand); });
+$("heroPoster").addEventListener("click", event => {
+  const tile = event.target.closest("button[data-poster-brand]");
+  if (!tile) return;
+  event.preventDefault();
+  applyBrand(tile.dataset.posterBrand);
+});
 $("categoryPills").addEventListener("click", event => { const pill=event.target.closest("[data-category]"); if(pill) applyCategory(pill.dataset.category); });
 $("menuCategories").addEventListener("click", event => { const button=event.target.closest("[data-menu-category]"); if(button) applyCategory(button.dataset.menuCategory); });
 $("menuBrands").addEventListener("click", event => { const button=event.target.closest("[data-menu-brand]"); if(button) applyBrand(button.dataset.menuBrand); });
 $("menuDrawer").addEventListener("click", event => { if(event.target.closest("[data-menu-close]")) closeDrawer(); });
 ["searchInput","categoryFilter","brandFilter","sortFilter"].forEach(id => $(id).addEventListener(id==="searchInput"?"input":"change",render));
 $("clearFilters").onclick=$("emptyReset").onclick=resetFilters;
-$("menuOpen").onclick=()=>openDrawer("menu"); $("menuClose").onclick=()=>closeDrawer(); $("cartOpen").onclick=()=>openDrawer("cart"); $("cartClose").onclick=()=>closeDrawer(); $("drawerOverlay").onclick=()=>closeDrawer(); $("sendWhatsApp").onclick=sendWhatsApp;
+$("menuOpen").addEventListener("click", event => { event.preventDefault(); openDrawer("menu"); });
+$("menuClose").addEventListener("click", event => { event.preventDefault(); closeDrawer(); });
+$("cartOpen").addEventListener("click", event => { event.preventDefault(); event.stopPropagation(); openDrawer("cart"); });
+$("cartClose").addEventListener("click", event => { event.preventDefault(); closeDrawer(); });
+$("drawerOverlay").addEventListener("click", () => closeDrawer());
+$("sendWhatsApp").addEventListener("click", sendWhatsApp);
 $("brandScrollLeft").onclick=()=>$("brandStrip").scrollBy({left:-380,behavior:"smooth"}); $("brandScrollRight").onclick=()=>$("brandStrip").scrollBy({left:380,behavior:"smooth"});
 $("productModal").addEventListener("click", event => {
   if (event.target.closest("[data-modal-close]")) closeProductModal();
