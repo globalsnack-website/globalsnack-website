@@ -159,3 +159,82 @@
 .live-quantity output{display:grid;place-items:center;min-width:42px;height:34px;font-size:12px;font-weight:800;color:var(--espresso);font-variant-numeric:tabular-nums}
 .quantity-hint{font-size:8px;color:var(--muted);letter-spacing:.3px}
 @media(max-width:760px){.product-action{gap:4px}.quantity-control.live-quantity{height:32px}.live-quantity button{height:30px;width:32px}.live-quantity output{height:30px;min-width:38px}}
+
+
+/* Approved Global Snack real-product design integration */
+:root{
+  --espresso:#28140e;
+  --brown:#482417;
+  --brown-soft:#79513b;
+  --cream:#f7efe2;
+  --paper:#fffaf2;
+  --gold:#d79a4b;
+  --gold-light:#f1c889;
+  --muted:#8b7768;
+  --line:#e7d9c7;
+  --green:#344a39;
+  --shadow:0 20px 55px rgba(40,20,14,.14);
+}
+body{background:var(--paper);color:var(--espresso)}
+.announcement{background:#21100b;color:#f4d7ad}
+.site-header{background:rgba(255,250,242,.96);border-bottom-color:var(--line)}
+.brand{gap:10px}
+.cart-trigger{background:var(--espresso);border-radius:30px}
+.cart-trigger b{background:#f2c889;color:#28140e}
+.hero-branded{
+  background:radial-gradient(ellipse at 78% 42%,#69432c 0,#3b2116 48%,#24120d 100%);
+  min-height:620px;
+}
+.hero-branded h1{letter-spacing:-2px}
+.hero-branded h1 em{color:#e5b36e}
+.hero-content>p{color:#e4d1bd}
+.button-gold{background:#f1c889;color:#2a150e}
+.button-gold:hover{background:#fff}
+.hero-brand-proof{border-top-color:#ffffff35}
+.hero-brand-proof span{color:#e0ad68}
+.hero-brand-proof b{color:#fff0dc}
+.hero-poster-shell{
+  background:linear-gradient(145deg,#fffdf8,#eadbc7);
+  border:1px solid #f3d19a;
+  outline:7px solid #ffffff0b;
+  border-radius:14px;
+  box-shadow:0 28px 75px #10080480;
+}
+.hero-poster-heading{border-bottom-color:#d8bd98}
+.hero-poster-heading span{color:#9a6d3d}
+.hero-poster-heading strong{color:#482417}
+.poster-product{border-radius:9px;background:linear-gradient(145deg,#fff,#f4eee4)}
+.poster-product img{mix-blend-mode:multiply}
+.poster-brand-name{background:#2b160fdd;color:#fff3df}
+.hero-poster-footer{border-top-color:#d8bd98;color:#8c6339}
+.brand-section{background:#fffaf2;border-bottom-color:var(--line)}
+.brand-card{border-radius:8px;background:#fff;border-color:#eee2d3}
+.brand-card:hover{border-color:#d79a4b}
+.brand-card-photo{background:linear-gradient(145deg,#fffdf8,#eadbc7)}
+.brand-card-name{color:#28140e}
+.brand-card-link{color:#b97837}
+.category-showcase{background:#f7efe2;border-bottom-color:var(--line)}
+.category-showcase-head h2{color:#28140e}
+.category-banner{border-radius:10px;box-shadow:0 12px 28px #321e1415}
+.category-banner:hover{border-color:#d79a4b}
+.category-banner-copy strong{color:#fff5e9}
+.category-banner-cta{color:#f1c889}
+.catalogue-section{background:var(--paper)}
+.catalogue-heading h2{color:#28140e}
+.catalogue-heading h2 em{color:#b97837}
+.search-box,.catalogue-tools select{border-color:var(--line);background:#fffaf2}
+.product-card{border-radius:9px;border-color:#eee2d3;box-shadow:0 5px 20px #49321b08}
+.product-card:hover{border-color:#d5a96e;box-shadow:0 18px 35px #49321b20}
+.product-image{background:linear-gradient(145deg,#fffdf8,#f1e6d7)}
+.product-image img{mix-blend-mode:multiply}
+.quick-add,.add-button{background:var(--espresso)}
+.quick-add:hover,.add-button:hover{background:#a65d2d}
+.editorial-band{background:#f0e2ce}
+.editorial-band h2 em{color:#b97837}
+.site-footer{background:#fffaf2}
+@media(max-width:760px){
+  .hero-branded{padding-top:48px;padding-bottom:75px}
+  .hero-poster-shell{height:360px}
+  .category-banner{border-radius:8px}
+  .brand-card{border-radius:7px}
+}
